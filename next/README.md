@@ -1,9 +1,9 @@
 # vue-cropper
 一个优雅的图片裁剪插件
 
-[ [查看演示 Demo](https://github.xyxiao.cn/vue-cropper/docs/vue2.html) ]  
-[ [README_english](./english.md) ]  
-[ [更新日志](./CHANGELOG.md) ]
+[ [查看演示 Demo](https://github.xyxiao.cn/vue-cropper/docs/vue3.html) ]  
+[ [README_english](../english.md) ]  
+[ [更新日志](../CHANGELOG.md) ]
 
 
 
@@ -132,6 +132,8 @@ if(process.browser) {
 名称 | 功能 | 默认值 | 可选值
 --- | --- | --- | ---
 img | 裁剪图片的地址 | 空 | `url 地址`, `base64`, `blob`
+outputSize | 裁剪生成图片的质量 | 1 | 0.1 ~ 1
+img | 裁剪图片的地址 | 空 | `url 地址`, `base64`, `blob`
 outputSize | 裁剪生成图片的质量 | `1` | 0.1 ~ 1
 outputType | 裁剪生成图片的格式 | jpg (jpg 需要传入jpeg) | `jpeg`, `png`, `webp`
 info | 裁剪框的大小信息 | `true` | `true`, `false`
@@ -139,8 +141,8 @@ canScale | 图片是否允许滚轮缩放 | `true` | `true`, `false`
 autoCrop | 是否默认生成截图框 | `false` | `true`, `false`
 autoCropWidth | 默认生成截图框宽度 | 容器的 80% | 0 ~ max
 autoCropHeight | 默认生成截图框高度 | 容器的 80% | 0 ~ max
-fixed | 是否开启截图框宽高固定比例 | `false` | `true`, `false`
-fixedNumber | 截图框的宽高比例, 开启`fixed`生效 | `[1, 1]` | `[ 宽度 ,  高度 ]`
+fixed | 是否开启截图框宽高固定比例 | `true` | `true`, `false`
+fixedNumber | 截图框的宽高比例 | `[1, 1]` | `[ 宽度 ,  高度 ]`
 full | 是否输出原图比例的截图 | `false` | `true`, `false`
 fixedBox | 固定截图框大小 | 不允许改变 | `false` | `true`, `false`
 canMove | 上传图片是否可以移动 | `true` | `true`, `false`
@@ -152,8 +154,6 @@ infoTrue | true 为展示真实输出图片宽高 `false` 展示看到的截图�
 maxImgSize | 限制图片最大宽度和高度 | `2000` | 0 ~ max
 enlarge | 图片根据截图框输出比例倍数 | `1` | 0 ~ max(建议不要太大不然会卡死的呢)
 mode | 图片默认渲染方式 | `contain` | `contain` , `cover`, `100px`, `100%` auto
-limitMinSize | 裁剪框限制最小区域 | 10 | Number, Array, String
-fillColor | 导出时背景颜色填充 | 空 | `#ffffff`, `white`
 
 ### 2. 可用回调方法
 
@@ -316,8 +316,4 @@ this.$refs.cropper.getCropBlob(data => {
 
 ## 四、交流
 有什么意见，或者 bug，或者想一起开发 `vue-cropper`， 或者想一起开发其他插件
-![image](https://github.com/xyxiao001/vue-cropper/assets/15681693/7264a98f-d127-4c45-8c4e-2748096223ec)
-
-
-
-
+![群号 857471950](https://user-images.githubusercontent.com/15681693/134663362-a6940a73-4692-4cc0-985f-109579057014.JPG)
