@@ -1,4 +1,4 @@
-import { defineComponent as M, openBlock as C, createElementBlock as x, withDirectives as X, createElementVNode as v, normalizeStyle as b, vShow as O, createCommentVNode as y, normalizeClass as S, toDisplayString as Y } from "vue";
+import { defineComponent as M, openBlock as C, createElementBlock as b, withDirectives as X, createElementVNode as v, normalizeStyle as x, vShow as O, createCommentVNode as y, normalizeClass as S, toDisplayString as Y } from "vue";
 const H = {};
 H.getData = (t) => new Promise((e, i) => {
   let s = {};
@@ -952,16 +952,16 @@ const N = (t, e) => {
   class: "cropper-box"
 }, z = ["src"], B = { class: "cropper-view-box" }, P = ["src"], D = { key: 1 };
 function U(t, e, i, s, r, o) {
-  return C(), x("div", {
+  return C(), b("div", {
     class: "vue-cropper",
     ref: "cropper",
     onMouseover: e[28] || (e[28] = (...h) => t.scaleImg && t.scaleImg(...h)),
     onMouseout: e[29] || (e[29] = (...h) => t.cancelScale && t.cancelScale(...h))
   }, [
-    t.imgs ? (C(), x("div", $, [
+    t.imgs ? (C(), b("div", $, [
       X(v("div", {
         class: "cropper-box-canvas",
-        style: b({
+        style: x({
           width: t.trueWidth + "px",
           height: t.trueHeight + "px",
           perspective: "1000px",
@@ -984,7 +984,7 @@ function U(t, e, i, s, r, o) {
     }, null, 34),
     X(v("div", {
       class: "cropper-crop-box",
-      style: b({
+      style: x({
         width: t.cropW + "px",
         height: t.cropH + "px",
         transform: "translate3d(" + t.cropOffsertX + "px," + t.cropOffsertY + "px,0)"
@@ -992,10 +992,11 @@ function U(t, e, i, s, r, o) {
     }, [
       v("span", B, [
         v("img", {
-          style: b({
+          style: x({
             width: t.trueWidth + "px",
             height: t.trueHeight + "px",
-            transform: "scale(" + t.scale + "," + t.scale + ") translate3d(" + (t.x - t.cropOffsertX) / t.scale + "px," + (t.y - t.cropOffsertY) / t.scale + "px,0)rotateZ(" + t.rotate * 90 + "deg)"
+            perspective: "1000px",
+            transform: "scale(" + t.scale + "," + t.scale + ") translate3d(" + (t.x - t.cropOffsertX) / t.scale + "px," + (t.y - t.cropOffsertY) / t.scale + "px,0)rotateZ(" + t.rotate * 90 + "deg)rotateX(" + t.rotateX + "deg)rotateY(" + t.rotateY + "deg)"
           }),
           src: t.imgs,
           alt: "cropper-img"
@@ -1006,12 +1007,12 @@ function U(t, e, i, s, r, o) {
         onMousedown: e[2] || (e[2] = (...h) => t.cropMove && t.cropMove(...h)),
         onTouchstart: e[3] || (e[3] = (...h) => t.cropMove && t.cropMove(...h))
       }, null, 32),
-      t.info ? (C(), x("span", {
+      t.info ? (C(), b("span", {
         key: 0,
         class: "crop-info",
-        style: b({ top: t.cropInfo.top })
+        style: x({ top: t.cropInfo.top })
       }, Y(t.cropInfo.width) + " × " + Y(t.cropInfo.height), 5)) : y("", !0),
-      t.fixedBox ? y("", !0) : (C(), x("span", D, [
+      t.fixedBox ? y("", !0) : (C(), b("span", D, [
         v("span", {
           class: "crop-line line-w",
           onMousedown: e[4] || (e[4] = (h) => t.changeCropSize(h, !1, !0, 0, 1)),
@@ -1078,10 +1079,10 @@ function U(t, e, i, s, r, o) {
     ])
   ], 544);
 }
-const W = /* @__PURE__ */ N(A, [["render", U], ["__scopeId", "data-v-8c2b2889"]]), F = function(t) {
+const W = /* @__PURE__ */ N(A, [["render", U], ["__scopeId", "data-v-1bfd3217"]]), F = function(t) {
   t.component("VueCropper", W);
 }, j = {
-  version: "0.0.2",
+  version: "0.0.5",
   install: F,
   VueCropper: W
 };

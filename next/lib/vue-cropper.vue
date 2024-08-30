@@ -37,8 +37,11 @@
           :style="{
 						'width': trueWidth + 'px',
 						'height': trueHeight + 'px',
+            'perspective': '1000px',
 						'transform': 'scale(' + scale + ',' + scale + ') ' + 'translate3d('+ (x - cropOffsertX) / scale  + 'px,' + (y - cropOffsertY) / scale + 'px,' + '0)'
 						+ 'rotateZ('+ rotate * 90 +'deg)'
+            + 'rotateX('+ rotateX +'deg)'
+            + 'rotateY('+ rotateY +'deg)'
 						}"
           :src="imgs"
           alt="cropper-img"
