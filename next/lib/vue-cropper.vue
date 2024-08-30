@@ -1821,7 +1821,7 @@ export default defineComponent({
             w = minT
           }
         }
-        let minE = axis.y2 - axis.y2
+        let minE = axis.y2 - axis.y1
         if(h > minE) {
           if(h > (minE + 1)) {
             h = minE

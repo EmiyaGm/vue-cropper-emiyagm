@@ -890,7 +890,7 @@ const N = (t, e) => {
       if (this.centerBox) {
         let i = this.getImgAxis(), s = i.x2 - i.x1;
         t > s && (t > s + 1 ? (t = s, e = t / this.fixedNumber[0] * this.fixedNumber[1]) : t = s);
-        let r = i.y2 - i.y2;
+        let r = i.y2 - i.y1;
         e > r && (e > r + 1 ? (e = r, t = e / this.fixedNumber[1] * this.fixedNumber[0]) : e = r);
       }
       this.cropW = t, this.cropH = e, this.checkCropLimitSize(), this.$nextTick(() => {
@@ -1078,10 +1078,10 @@ function U(t, e, i, s, r, o) {
     ])
   ], 544);
 }
-const W = /* @__PURE__ */ N(A, [["render", U], ["__scopeId", "data-v-abf0af6a"]]), F = function(t) {
+const W = /* @__PURE__ */ N(A, [["render", U], ["__scopeId", "data-v-8c2b2889"]]), F = function(t) {
   t.component("VueCropper", W);
 }, j = {
-  version: "0.0.1",
+  version: "0.0.2",
   install: F,
   VueCropper: W
 };
