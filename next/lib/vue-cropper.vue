@@ -1814,18 +1814,18 @@ export default defineComponent({
         let axis = this.getImgAxis();
         let minT = axis.x2 - axis.x1
         if(w > minT) {
-          if(w > minT + 1) {
+          if(w > (minT + 1)) {
             w = minT
-            h = w / this.fixedNumber[0] * this.fixedNumber[1]
+            h = (w / this.fixedNumber[0]) * this.fixedNumber[1]
           } else {
             w = minT
           }
         }
         let minE = axis.y2 - axis.y2
         if(h > minE) {
-          if(h > minE + 1) {
+          if(h > (minE + 1)) {
             h = minE
-            w = h / this.fixedNumber[1] * this.fixedNumber[0]
+            w = (h / this.fixedNumber[1]) * this.fixedNumber[0]
           } else {
             h = minE
           }

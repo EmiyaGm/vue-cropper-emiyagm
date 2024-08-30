@@ -1,11 +1,11 @@
-import { defineComponent as M, openBlock as C, createElementBlock as x, withDirectives as O, createElementVNode as v, normalizeStyle as y, vShow as X, createCommentVNode as b, normalizeClass as S, toDisplayString as H } from "vue";
-const Y = {};
-Y.getData = (t) => new Promise((e, i) => {
+import { defineComponent as M, openBlock as C, createElementBlock as x, withDirectives as X, createElementVNode as v, normalizeStyle as b, vShow as O, createCommentVNode as y, normalizeClass as S, toDisplayString as Y } from "vue";
+const H = {};
+H.getData = (t) => new Promise((e, i) => {
   let s = {};
   I(t).then((r) => {
     s.arrayBuffer = r;
     try {
-      s.orientation = T(r);
+      s.orientation = k(r);
     } catch {
       s.orientation = -1;
     }
@@ -53,13 +53,13 @@ function L(t, e) {
     o[h] = i.charCodeAt(h);
   return r;
 }
-function k(t, e, i) {
+function T(t, e, i) {
   var s = "", r;
   for (r = e, i += e; r < i; r++)
     s += String.fromCharCode(t.getUint8(r));
   return s;
 }
-function T(t) {
+function k(t) {
   var e = new DataView(t), i = e.byteLength, s, r, o, h, n, l, c, a, p, f;
   if (e.getUint8(0) === 255 && e.getUint8(1) === 216)
     for (p = 2; p < i; ) {
@@ -69,7 +69,7 @@ function T(t) {
       }
       p++;
     }
-  if (c && (r = c + 4, o = c + 10, k(e, r, 4) === "Exif" && (l = e.getUint16(o), n = l === 18761, (n || l === 19789) && e.getUint16(o + 2, n) === 42 && (h = e.getUint32(o + 4, n), h >= 8 && (a = o + h)))), a) {
+  if (c && (r = c + 4, o = c + 10, T(e, r, 4) === "Exif" && (l = e.getUint16(o), n = l === 18761, (n || l === 19789) && e.getUint16(o + 2, n) === 42 && (h = e.getUint32(o + 4, n), h >= 8 && (a = o + h)))), a) {
     for (i = e.getUint16(a, n), f = 0; f < i; f++)
       if (p = a + f * 12 + 2, e.getUint16(p, n) === 274) {
         p += 8, s = e.getUint16(p, n);
@@ -145,7 +145,9 @@ const N = (t, e) => {
       scalingSet: "",
       coeStatus: "",
       // 控制emit触发频率
-      isCanShow: !0
+      isCanShow: !0,
+      rotateX: 0,
+      rotateY: 0
     };
   },
   props: {
@@ -408,7 +410,7 @@ const N = (t, e) => {
         if (this.img === "")
           return this.$emit("img-load", new Error("图片不能为空")), !1;
         let i = t.width, s = t.height;
-        Y.getData(t).then((r) => {
+        H.getData(t).then((r) => {
           this.orientation = r.orientation || 1;
           let o = Number(this.maxImgSize);
           if (!this.orientation && i < o & s < o) {
@@ -886,8 +888,10 @@ const N = (t, e) => {
     // 手动改变截图框大小函数
     changeCrop(t, e) {
       if (this.centerBox) {
-        let i = this.getImgAxis();
-        t > i.x2 - i.x1 && (t = i.x2 - i.x1, e = t / this.fixedNumber[0] * this.fixedNumber[1]), e > i.y2 - i.y1 && (e = i.y2 - i.y1, t = e / this.fixedNumber[1] * this.fixedNumber[0]);
+        let i = this.getImgAxis(), s = i.x2 - i.x1;
+        t > s && (t > s + 1 ? (t = s, e = t / this.fixedNumber[0] * this.fixedNumber[1]) : t = s);
+        let r = i.y2 - i.y2;
+        e > r && (e > r + 1 ? (e = r, t = e / this.fixedNumber[1] * this.fixedNumber[0]) : e = r);
       }
       this.cropW = t, this.cropH = e, this.checkCropLimitSize(), this.$nextTick(() => {
         this.cropOffsertX = (this.w - this.cropW) / 2, this.cropOffsertY = (this.h - this.cropH) / 2, this.centerBox && this.moveCrop(null, !0);
@@ -906,6 +910,12 @@ const N = (t, e) => {
     // 向右边旋转
     rotateRight() {
       this.rotate = this.rotate >= 3 ? 0 : this.rotate + 1;
+    },
+    changeRotateX(t) {
+      this.rotateX = t;
+    },
+    changeRotateY(t) {
+      this.rotateY = t;
     },
     // 清除旋转
     rotateClear() {
@@ -949,12 +959,13 @@ function U(t, e, i, s, r, o) {
     onMouseout: e[29] || (e[29] = (...h) => t.cancelScale && t.cancelScale(...h))
   }, [
     t.imgs ? (C(), x("div", $, [
-      O(v("div", {
+      X(v("div", {
         class: "cropper-box-canvas",
-        style: y({
+        style: b({
           width: t.trueWidth + "px",
           height: t.trueHeight + "px",
-          transform: "scale(" + t.scale + "," + t.scale + ") translate3d(" + t.x / t.scale + "px," + t.y / t.scale + "px,0)rotateZ(" + t.rotate * 90 + "deg)"
+          perspective: "1000px",
+          transform: "scale(" + t.scale + "," + t.scale + ") translate3d(" + t.x / t.scale + "px," + t.y / t.scale + "px,0)rotateZ(" + t.rotate * 90 + "deg)rotateX(" + t.rotateX + "deg)rotateY(" + t.rotateY + "deg)"
         })
       }, [
         v("img", {
@@ -963,17 +974,17 @@ function U(t, e, i, s, r, o) {
           ref: "cropperImg"
         }, null, 8, z)
       ], 4), [
-        [X, !t.loading]
+        [O, !t.loading]
       ])
-    ])) : b("", !0),
+    ])) : y("", !0),
     v("div", {
       class: S(["cropper-drag-box", { "cropper-move": t.move && !t.crop, "cropper-crop": t.crop, "cropper-modal": t.cropping }]),
       onMousedown: e[0] || (e[0] = (...h) => t.startMove && t.startMove(...h)),
       onTouchstart: e[1] || (e[1] = (...h) => t.startMove && t.startMove(...h))
     }, null, 34),
-    O(v("div", {
+    X(v("div", {
       class: "cropper-crop-box",
-      style: y({
+      style: b({
         width: t.cropW + "px",
         height: t.cropH + "px",
         transform: "translate3d(" + t.cropOffsertX + "px," + t.cropOffsertY + "px,0)"
@@ -981,7 +992,7 @@ function U(t, e, i, s, r, o) {
     }, [
       v("span", B, [
         v("img", {
-          style: y({
+          style: b({
             width: t.trueWidth + "px",
             height: t.trueHeight + "px",
             transform: "scale(" + t.scale + "," + t.scale + ") translate3d(" + (t.x - t.cropOffsertX) / t.scale + "px," + (t.y - t.cropOffsertY) / t.scale + "px,0)rotateZ(" + t.rotate * 90 + "deg)"
@@ -998,9 +1009,9 @@ function U(t, e, i, s, r, o) {
       t.info ? (C(), x("span", {
         key: 0,
         class: "crop-info",
-        style: y({ top: t.cropInfo.top })
-      }, H(t.cropInfo.width) + " × " + H(t.cropInfo.height), 5)) : b("", !0),
-      t.fixedBox ? b("", !0) : (C(), x("span", D, [
+        style: b({ top: t.cropInfo.top })
+      }, Y(t.cropInfo.width) + " × " + Y(t.cropInfo.height), 5)) : y("", !0),
+      t.fixedBox ? y("", !0) : (C(), x("span", D, [
         v("span", {
           class: "crop-line line-w",
           onMousedown: e[4] || (e[4] = (h) => t.changeCropSize(h, !1, !0, 0, 1)),
@@ -1063,14 +1074,14 @@ function U(t, e, i, s, r, o) {
         }, null, 32)
       ]))
     ], 4), [
-      [X, t.cropping]
+      [O, t.cropping]
     ])
   ], 544);
 }
-const W = /* @__PURE__ */ N(A, [["render", U], ["__scopeId", "data-v-69939069"]]), F = function(t) {
+const W = /* @__PURE__ */ N(A, [["render", U], ["__scopeId", "data-v-abf0af6a"]]), F = function(t) {
   t.component("VueCropper", W);
 }, j = {
-  version: "1.1.1",
+  version: "0.0.1",
   install: F,
   VueCropper: W
 };
