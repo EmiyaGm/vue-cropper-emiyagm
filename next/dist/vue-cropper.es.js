@@ -964,7 +964,7 @@ function U(t, e, i, s, r, o) {
         style: y({
           width: t.trueWidth + "px",
           height: t.trueHeight + "px",
-          transform: "scale(" + t.scale + "," + t.scale + ") translate3d(" + t.x / t.scale + "px," + t.y / t.scale + "px,0)perspective: 1000pxrotateZ(" + t.rotate * 90 + "deg)rotateX(" + t.rotateX + "deg)rotateY(" + t.rotateY + "deg)"
+          transform: "scale(" + t.scale + "," + t.scale + ") translate3d(" + t.x / t.scale + "px," + t.y / t.scale + "px,0)rotateZ(" + t.rotate * 90 + "deg)perspective: 1000pxrotateX(" + t.rotateX + "deg)rotateY(" + t.rotateY + "deg)"
         })
       }, [
         v("img", {
@@ -994,7 +994,7 @@ function U(t, e, i, s, r, o) {
           style: y({
             width: t.trueWidth + "px",
             height: t.trueHeight + "px",
-            transform: "scale(" + t.scale + "," + t.scale + ") translate3d(" + (t.x - t.cropOffsertX) / t.scale + "px," + (t.y - t.cropOffsertY) / t.scale + "px,0)perspective: 1000pxrotateZ(" + t.rotate * 90 + "deg)rotateX(" + t.rotateX + "deg)rotateY(" + t.rotateY + "deg)"
+            transform: "scale(" + t.scale + "," + t.scale + ") translate3d(" + (t.x - t.cropOffsertX) / t.scale + "px," + (t.y - t.cropOffsertY) / t.scale + "px,0)rotateZ(" + t.rotate * 90 + "deg)perspective: 1000pxrotateX(" + t.rotateX + "deg)rotateY(" + t.rotateY + "deg)"
           }),
           src: t.imgs,
           alt: "cropper-img"
@@ -1077,10 +1077,10 @@ function U(t, e, i, s, r, o) {
     ])
   ], 544);
 }
-const W = /* @__PURE__ */ N(A, [["render", U], ["__scopeId", "data-v-5555e25f"]]), F = function(t) {
+const W = /* @__PURE__ */ N(A, [["render", U], ["__scopeId", "data-v-4c4113ee"]]), F = function(t) {
   t.component("VueCropper", W);
 }, j = {
-  version: "0.0.6",
+  version: "0.0.7",
   install: F,
   VueCropper: W
 };
