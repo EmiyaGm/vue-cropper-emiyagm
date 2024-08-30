@@ -7,8 +7,8 @@
         :style="{
 					'width': trueWidth + 'px',
 					'height': trueHeight + 'px',
-          'perspective': '1000px',
 					'transform': 'scale(' + scale + ',' + scale + ') ' + 'translate3d('+ x / scale + 'px,' + y / scale + 'px,' + '0)'
+          + 'perspective: 1000px'
           + 'rotateZ('+ rotate * 90 +'deg)'
           + 'rotateX('+ rotateX +'deg)'
           + 'rotateY('+ rotateY +'deg)'
@@ -37,8 +37,8 @@
           :style="{
 						'width': trueWidth + 'px',
 						'height': trueHeight + 'px',
-            'perspective': '1000px',
 						'transform': 'scale(' + scale + ',' + scale + ') ' + 'translate3d('+ (x - cropOffsertX) / scale  + 'px,' + (y - cropOffsertY) / scale + 'px,' + '0)'
+            + 'perspective: 1000px'
 						+ 'rotateZ('+ rotate * 90 +'deg)'
             + 'rotateX('+ rotateX +'deg)'
             + 'rotateY('+ rotateY +'deg)'
