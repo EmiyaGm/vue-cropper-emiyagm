@@ -1874,6 +1874,10 @@ export default defineComponent({
       });
     },
 
+    changeRotate(number) {
+      this.rotate = number <= -3 || number >= 3 ? 0 : number;
+    },
+
     // 向左边旋转
     rotateLeft() {
       this.rotate = this.rotate <= -3 ? 0 : this.rotate - 1;
