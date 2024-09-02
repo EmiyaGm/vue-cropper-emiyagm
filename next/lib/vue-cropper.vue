@@ -9,7 +9,7 @@
 					'height': trueHeight + 'px',
 					'transform': 'scale(' + scale + ',' + scale + ') ' + 'translate3d('+ x / scale + 'px,' + y / scale + 'px,' + '0)'
           + 'rotateZ('+ rotate * 90 +'deg)'
-          + 'perspective: 1000px'
+          + 'perspective(1000px)'
           + 'rotateX('+ rotateX +'deg)'
           + 'rotateY('+ rotateY +'deg)'
 					}"
@@ -39,7 +39,7 @@
 						'height': trueHeight + 'px',
 						'transform': 'scale(' + scale + ',' + scale + ') ' + 'translate3d('+ (x - cropOffsertX) / scale  + 'px,' + (y - cropOffsertY) / scale + 'px,' + '0)'
 						+ 'rotateZ('+ rotate * 90 +'deg)'
-            + 'perspective: 1000px'
+            + 'perspective(1000px)'
             + 'rotateX('+ rotateX +'deg)'
             + 'rotateY('+ rotateY +'deg)'
 						}"
