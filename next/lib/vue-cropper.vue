@@ -417,13 +417,13 @@ export default defineComponent({
     },
     rotate() {
       this.showPreview();
-      if (this.autoCrop) {
-        this.goAutoCrop(this.cropW, this.cropH);
-      } else {
-        if (this.cropW > 0 || this.cropH > 0) {
-          this.goAutoCrop(this.cropW, this.cropH);
-        }
-      }
+      // if (this.autoCrop) {
+      //   this.goAutoCrop(this.cropW, this.cropH);
+      // } else {
+      //   if (this.cropW > 0 || this.cropH > 0) {
+      //     this.goAutoCrop(this.cropW, this.cropH);
+      //   }
+      // }
     },
   },
   methods: {
