@@ -83,7 +83,7 @@ const N = (t, e) => {
   for (const [s, r] of e)
     i[s] = r;
   return i;
-}, A = M({
+}, $ = M({
   data: function() {
     return {
       // 容器高宽
@@ -338,7 +338,7 @@ const N = (t, e) => {
       this.checkedImg();
     },
     rotate() {
-      this.showPreview(), this.autoCrop ? this.goAutoCrop(this.cropW, this.cropH) : (this.cropW > 0 || this.cropH > 0) && this.goAutoCrop(this.cropW, this.cropH);
+      this.showPreview();
     }
   },
   methods: {
@@ -950,7 +950,7 @@ const N = (t, e) => {
   unmounted() {
     window.removeEventListener("mousemove", this.moveCrop), window.removeEventListener("mouseup", this.leaveCrop), window.removeEventListener("touchmove", this.moveCrop), window.removeEventListener("touchend", this.leaveCrop), this.cancelScale();
   }
-}), $ = {
+}), A = {
   key: 0,
   class: "cropper-box"
 }, z = ["src"], B = { class: "cropper-view-box" }, P = ["src"], D = { key: 1 };
@@ -961,7 +961,7 @@ function U(t, e, i, s, r, o) {
     onMouseover: e[28] || (e[28] = (...h) => t.scaleImg && t.scaleImg(...h)),
     onMouseout: e[29] || (e[29] = (...h) => t.cancelScale && t.cancelScale(...h))
   }, [
-    t.imgs ? (C(), x("div", $, [
+    t.imgs ? (C(), x("div", A, [
       b(v("div", {
         class: "cropper-box-canvas",
         style: y({
@@ -1080,10 +1080,10 @@ function U(t, e, i, s, r, o) {
     ])
   ], 544);
 }
-const W = /* @__PURE__ */ N(A, [["render", U], ["__scopeId", "data-v-9ea36a32"]]), F = function(t) {
+const W = /* @__PURE__ */ N($, [["render", U], ["__scopeId", "data-v-447d71fa"]]), F = function(t) {
   t.component("VueCropper", W);
 }, j = {
-  version: "0.0.9",
+  version: "0.0.10",
   install: F,
   VueCropper: W
 };
