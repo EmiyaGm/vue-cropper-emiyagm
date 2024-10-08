@@ -41,6 +41,7 @@
 					<button @click="finish('base64')" class="btn">preview(base64)</button>
 					<button @click="finish('blob')" class="btn">preview(blob)</button>
 					<button @click="() => option.img = ''" class="btn">清除图片</button>
+          <button @click="rotateY" class="btn">RotateY</button>
 					<a @click="down('base64')" class="btn">download(base64)</a>
 					<a @click="down('blob')" class="btn">download(blob)</a>
 					<a :href="downImg" download="demo.png" ref="downloadDom"></a>
@@ -282,6 +283,9 @@ export default {
     };
   },
   methods: {
+    rotateY() {
+      this.$refs.cropper.changeRotateY(90)
+    },
     changeImg() {
       this.option.img = this.lists[~~(Math.random() * this.lists.length)].img;
     },

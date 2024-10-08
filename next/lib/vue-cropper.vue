@@ -425,6 +425,12 @@ export default defineComponent({
       //   }
       // }
     },
+    rotateY() {
+      this.showPreview();
+    },
+    rotateX() {
+      this.showPreview();
+    }
   },
   methods: {
     getVersion (name) {
@@ -1409,6 +1415,8 @@ export default defineComponent({
       let trueHeight = this.trueHeight;
       let cropOffsertX = this.cropOffsertX;
       let cropOffsertY = this.cropOffsertY;
+      let rotateY = this.rotateY;
+      let rotateX = this.rotateX;
       img.onload = () => {
         if (this.cropW !== 0) {
           let ctx = canvas.getContext("2d");
@@ -1539,6 +1547,14 @@ export default defineComponent({
                 );
               }
           }
+
+          if (this.rotateY) {
+            console.log('-----123123-----')
+            const m11 = Math.cos(this.rotateY * Math.PI / 180);
+            const dx = (width / 2) - (width * m11 / 2);
+            ctx.transform(m11, 0, 0, 1, dx, 0)
+          }
+          
           ctx.restore();
         } else {
           let width = trueWidth * this.scale;
@@ -1642,7 +1658,9 @@ export default defineComponent({
         width: `${this.trueWidth}px`,
         height: `${this.trueHeight}px`,
         transform: `scale(${scale})translate3d(${transformX}px, ${transformY}px, ${transformZ}px)rotateZ(${this
-          .rotate * 90}deg)`
+          .rotate * 90}deg)rotateY(${this
+          .rotateY}deg)rotateX(${this
+          .rotateX}deg)`
       };
       obj.html = `
       <div class="show-preview" style="width: ${obj.w}px; height: ${
@@ -1653,7 +1671,9 @@ export default defineComponent({
         this.trueHeight
       }px; transform:
           scale(${scale})translate3d(${transformX}px, ${transformY}px, ${transformZ}px)rotateZ(${this
-        .rotate * 90}deg)">
+        .rotate * 90}deg)rotateY(${this
+          .rotateY}deg)rotateX(${this
+          .rotateX}deg)">
         </div>
       </div>`;
       this.$emit("real-time", obj);
