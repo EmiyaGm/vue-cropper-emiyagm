@@ -1447,6 +1447,16 @@ export default defineComponent({
             ctx.fillStyle = this.fillColor;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
           }
+          if (rotateY) {
+            const m11 = Math.cos(rotateY * Math.PI / 180);
+            const dx = (width / 2) - (width * m11 / 2);
+            ctx.transform(m11, 0, 0, 1, dx, 0)
+          }
+          if (rotateX) {
+            const m22 = Math.cos(rotateX * Math.PI / 180);
+            const dy = (width / 2) - (width * m22 / 2);
+            ctx.transform(1, 0, 0, m22, 0, dy)
+          }
           switch (rotate) {
             case 0:
               if (!this.full) {
@@ -1547,13 +1557,6 @@ export default defineComponent({
                 );
               }
           }
-
-          if (this.rotateY) {
-            console.log('-----123123-----')
-            const m11 = Math.cos(this.rotateY * Math.PI / 180);
-            const dx = (width / 2) - (width * m11 / 2);
-            ctx.transform(m11, 0, 0, 1, dx, 0)
-          }
           
           ctx.restore();
         } else {
@@ -1565,6 +1568,16 @@ export default defineComponent({
           if (this.fillColor) {
             ctx.fillStyle = this.fillColor;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+          }
+          if (rotateY) {
+            const m11 = Math.cos(rotateY * Math.PI / 180);
+            const dx = (width / 2) - (width * m11 / 2);
+            ctx.transform(m11, 0, 0, 1, dx, 0)
+          }
+          if (rotateX) {
+            const m22 = Math.cos(rotateX * Math.PI / 180);
+            const dy = (width / 2) - (width * m22 / 2);
+            ctx.transform(1, 0, 0, m22, 0, dy)
           }
           switch (rotate) {
             case 0:
