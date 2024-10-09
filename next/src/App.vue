@@ -205,6 +205,9 @@
 				</div>
 				
 			</div>
+      <div>
+        <three :originImage="originImage" v-if="originImage" :width="width" :height="height"></three>
+      </div>
 		</div>
 	</div>
 </template>
@@ -217,11 +220,13 @@ import { VueCropper } from "../lib/index";
 // import { VueCropper }  from "vue-cropper";
 
 import codes from "./code.vue";
+import three from "./three.vue"
 
 export default {
   components: {
     VueCropper,
     codes,
+    three,
   },
   data: function() {
     return {
@@ -281,6 +286,9 @@ export default {
       previewStyle3: {},
       previewStyle4: {},
 			code0: '',
+      originImage: '',
+      width: 0,
+      height:0 
     };
   },
   methods: {
@@ -409,6 +417,9 @@ export default {
       } else {
         this.$refs.cropper.getCropData(data => {
           this.downImg = data;
+          this.originImage = data
+          this.width = this.$refs.cropper.cropW
+          this.height = this.$refs.cropper.cropH
           if (window.navigator.msSaveBlob) {
             var blobObject = new Blob([data]);
             window.navigator.msSaveBlob(blobObject, "demo.png");

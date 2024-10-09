@@ -1415,8 +1415,6 @@ export default defineComponent({
       let trueHeight = this.trueHeight;
       let cropOffsertX = this.cropOffsertX;
       let cropOffsertY = this.cropOffsertY;
-      let rotateY = this.rotateY;
-      let rotateX = this.rotateX;
       img.onload = () => {
         if (this.cropW !== 0) {
           let ctx = canvas.getContext("2d");
@@ -1446,16 +1444,6 @@ export default defineComponent({
           if (this.fillColor) {
             ctx.fillStyle = this.fillColor;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-          }
-          if (rotateY) {
-            const m11 = Math.cos(rotateY * Math.PI / 180);
-            const dx = (width / 2) - (width * m11 / 2);
-            ctx.transform(m11, 0, 0, 1, dx, 0)
-          }
-          if (rotateX) {
-            const m22 = Math.cos(rotateX * Math.PI / 180);
-            const dy = (width / 2) - (width * m22 / 2);
-            ctx.transform(1, 0, 0, m22, 0, dy)
           }
           switch (rotate) {
             case 0:
