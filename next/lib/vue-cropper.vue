@@ -1659,9 +1659,9 @@ export default defineComponent({
         width: `${this.trueWidth}px`,
         height: `${this.trueHeight}px`,
         transform: `scale(${scale})translate3d(${transformX}px, ${transformY}px, ${transformZ}px)rotateZ(${this
-          .rotate * 90}deg)rotateY(${this
-          .rotateY}deg)rotateX(${this
-          .rotateX}deg)`
+          .rotate * 90}deg) perspective(1000px) rotateX(${this
+          .rotateX}deg) rotateY(${this
+          .rotateY}deg)`
       };
       obj.html = `
       <div class="show-preview" style="width: ${obj.w}px; height: ${
@@ -1672,9 +1672,9 @@ export default defineComponent({
         this.trueHeight
       }px; transform:
           scale(${scale})translate3d(${transformX}px, ${transformY}px, ${transformZ}px)rotateZ(${this
-        .rotate * 90}deg)rotateY(${this
-          .rotateY}deg)rotateX(${this
-          .rotateX}deg)">
+        .rotate * 90}deg) perspective(1000px) rotateX(${this
+          .rotateX}deg) rotateY(${this
+          .rotateY}deg)">
         </div>
       </div>`;
       this.$emit("real-time", obj);

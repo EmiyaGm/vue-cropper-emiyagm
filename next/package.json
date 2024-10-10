@@ -39,6 +39,6 @@
     "vue-tsc": "1.0.24"
   },
   "dependencies": {
-    "three": "^0.169.0"
+    "html2canvas": "^1.4.1"
   }
 }

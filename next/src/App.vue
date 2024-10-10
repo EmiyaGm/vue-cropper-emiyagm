@@ -45,6 +45,7 @@
           <button @click="rotateX" class="btn">RotateX</button>
 					<a @click="down('base64')" class="btn">download(base64)</a>
 					<a @click="down('blob')" class="btn">download(blob)</a>
+          <a @click="canvasDownload" class="btn">download</a>
 					<a :href="downImg" download="demo.png" ref="downloadDom"></a>
 				</div>
 
@@ -58,7 +59,7 @@
 						<p>截图框大小</p>
 						<div class="show-preview" :style="{'width': previews.w + 'px', 'height': previews.h + 'px',  'overflow': 'hidden',
 							'margin': '5px'}">
-							<div :style="previews.div">
+							<div :style="previews.div" ref="html2canvasDiv">
 								<img :src="previews.url" :style="previews.img">
 							</div>
 						</div>
@@ -205,9 +206,6 @@
 				</div>
 				
 			</div>
-      <div>
-        <three :originImage="originImage" v-if="originImage" :width="width" :height="height"></three>
-      </div>
 		</div>
 	</div>
 </template>
@@ -220,7 +218,7 @@ import { VueCropper } from "../lib/index";
 // import { VueCropper }  from "vue-cropper";
 
 import codes from "./code.vue";
-import three from "./three.vue"
+import html2canvas from 'html2canvas';
 
 export default {
   components: {
@@ -286,14 +284,26 @@ export default {
       previewStyle3: {},
       previewStyle4: {},
 			code0: '',
-      originImage: '',
-      width: 0,
-      height:0 
     };
   },
   methods: {
+    canvasDownload() {
+      const content = this.$refs.html2canvasDiv;
+      html2canvas(content).then((canvas) => {
+        // 你可以将 canvas 转换为图片，或者直接显示在页面上
+        // 转换为图片并下载
+        const img = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = img;
+        downloadLink.download = 'screenshot.png';
+        downloadLink.click();
+ 
+        // 仅显示 canvas
+        // document.body.appendChild(canvas);
+      });
+    },
     rotateX() {
-      this.$refs.cropper.changeRotateX(60)
+      this.$refs.cropper.changeRotateX(75)
     },
     rotateY() {
       this.$refs.cropper.changeRotateY(30)
@@ -417,9 +427,6 @@ export default {
       } else {
         this.$refs.cropper.getCropData(data => {
           this.downImg = data;
-          this.originImage = data
-          this.width = this.$refs.cropper.cropW
-          this.height = this.$refs.cropper.cropH
           if (window.navigator.msSaveBlob) {
             var blobObject = new Blob([data]);
             window.navigator.msSaveBlob(blobObject, "demo.png");
