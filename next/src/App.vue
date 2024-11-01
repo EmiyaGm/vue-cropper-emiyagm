@@ -224,7 +224,6 @@ export default {
   components: {
     VueCropper,
     codes,
-    three,
   },
   data: function() {
     return {
@@ -265,9 +264,9 @@ export default {
         canMoveBox: true,
         autoCrop: true,
         // 只有自动截图开启 宽度高度才生效
-        autoCropWidth: 200,
-        autoCropHeight: 150,
-        centerBox: false,
+        autoCropWidth: Number.MAX_VALUE,
+        autoCropHeight: Number.MAX_VALUE,
+        centerBox: true,
         high: false,
         cropData: {},
 				enlarge: 1,

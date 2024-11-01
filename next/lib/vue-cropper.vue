@@ -1776,6 +1776,9 @@ export default defineComponent({
               str = str.replace("%", "");
               imgW = (parseFloat(str) / 100) * this.w;
               scale = imgW / this.trueWidth;
+              if (this.trueHeight * scale > this.h) {
+                scale = this.h / this.trueHeight;
+              }
             }
 
             if (arr.length === 2 && str === "auto") {
