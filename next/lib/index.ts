@@ -7,7 +7,7 @@ const install = function(app: App) {
 }
 
 export const globalCropper: vueCropperGlobal = {
-  version: '0.0.13',
+  version: '0.0.14',
   install,
   VueCropper,
 }

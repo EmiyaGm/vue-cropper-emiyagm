@@ -875,7 +875,7 @@ const $ = (t, e) => {
               let h = 1, n = s[1];
               n.search("px") !== -1 && (n = n.replace("px", ""), i = parseFloat(n), h = i / this.trueHeight), t = Math.min(o, h);
             }
-            if (r.search("%") !== -1 && (r = r.replace("%", ""), e = parseFloat(r) / 100 * this.w, t = e / this.trueWidth), s.length === 2 && r === "auto") {
+            if (r.search("%") !== -1 && (r = r.replace("%", ""), e = parseFloat(r) / 100 * this.w, t = e / this.trueWidth, this.trueHeight * t > this.h && (t = this.h / this.trueHeight)), s.length === 2 && r === "auto") {
               let o = s[1];
               o.search("px") !== -1 && (o = o.replace("px", ""), i = parseFloat(o), t = i / this.trueHeight), o.search("%") !== -1 && (o = o.replace("%", ""), i = parseFloat(o) / 100 * this.h, t = i / this.trueHeight);
             }
@@ -1094,10 +1094,10 @@ function U(t, e, i, s, r, o) {
     ])
   ], 544);
 }
-const W = /* @__PURE__ */ $(N, [["render", U], ["__scopeId", "data-v-fd375ee5"]]), F = function(t) {
+const W = /* @__PURE__ */ $(N, [["render", U], ["__scopeId", "data-v-f9b786d8"]]), F = function(t) {
   t.component("VueCropper", W);
 }, j = {
-  version: "0.0.13",
+  version: "0.0.14",
   install: F,
   VueCropper: W
 };
