@@ -1522,9 +1522,18 @@ export default defineComponent({
           } else {
             // 输出原图比例截图
             setCanvasSize(width / this.scale, height / this.scale);
-            ctx.translate((imgW * 0.5 + dx) / this.scale, (imgH * 0.5 + dy) / this.scale);
+            ctx.translate(
+              (imgW * 0.5 + dx) / this.scale,
+              (imgH * 0.5 + dy) / this.scale
+            );
             ctx.rotate(radX);
-            ctx.drawImage(img, (-imgW * 0.5) / this.scale, (-imgH * 0.5) / this.scale, imgW, imgH);
+            ctx.drawImage(
+              img,
+              (-imgW * 0.5) / this.scale,
+              (-imgH * 0.5) / this.scale,
+              imgW / this.scale,
+              imgH / this.scale
+            );
           }
 
           ctx.restore();
