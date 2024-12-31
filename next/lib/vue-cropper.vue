@@ -1445,107 +1445,124 @@ export default defineComponent({
             ctx.fillStyle = this.fillColor;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
           }
-          switch (rotate) {
-            case 0:
-              if (!this.full) {
-                ctx.drawImage(img, dx, dy, imgW, imgH);
-              } else {
-                // 输出原图比例截图
-                setCanvasSize(width / this.scale, height / this.scale);
-                ctx.drawImage(
-                  img,
-                  dx / this.scale,
-                  dy / this.scale,
-                  imgW / this.scale,
-                  imgH / this.scale
-                );
-              }
-              break;
-            case 1:
-            case -3:
-              if (!this.full) {
-                // 换算图片旋转后的坐标弥补
-                dx = dx + (imgW - imgH) / 2;
-                dy = dy + (imgH - imgW) / 2;
-                ctx.rotate((rotate * 90 * Math.PI) / 180);
-                ctx.drawImage(img, dy, -dx - imgH, imgW, imgH);
-              } else {
-                setCanvasSize(width / this.scale, height / this.scale);
-                // 换算图片旋转后的坐标弥补
-                dx =
-                  dx / this.scale + (imgW / this.scale - imgH / this.scale) / 2;
-                dy =
-                  dy / this.scale + (imgH / this.scale - imgW / this.scale) / 2;
-                ctx.rotate((rotate * 90 * Math.PI) / 180);
-                ctx.drawImage(
-                  img,
-                  dy,
-                  -dx - imgH / this.scale,
-                  imgW / this.scale,
-                  imgH / this.scale
-                );
-              }
-              break;
-            case 2:
-            case -2:
-              if (!this.full) {
-                ctx.rotate((rotate * 90 * Math.PI) / 180);
-                ctx.drawImage(img, -dx - imgW, -dy - imgH, imgW, imgH);
-              } else {
-                setCanvasSize(width / this.scale, height / this.scale);
-                ctx.rotate((rotate * 90 * Math.PI) / 180);
-                dx = dx / this.scale;
-                dy = dy / this.scale;
-                ctx.drawImage(
-                  img,
-                  -dx - imgW / this.scale,
-                  -dy - imgH / this.scale,
-                  imgW / this.scale,
-                  imgH / this.scale
-                );
-              }
-              break;
-            case 3:
-            case -1:
-              if (!this.full) {
-                // 换算图片旋转后的坐标弥补
-                dx = dx + (imgW - imgH) / 2;
-                dy = dy + (imgH - imgW) / 2;
-                ctx.rotate((rotate * 90 * Math.PI) / 180);
-                ctx.drawImage(img, -dy - imgW, dx, imgW, imgH);
-              } else {
-                setCanvasSize(width / this.scale, height / this.scale);
-                // 换算图片旋转后的坐标弥补
-                dx =
-                  dx / this.scale + (imgW / this.scale - imgH / this.scale) / 2;
-                dy =
-                  dy / this.scale + (imgH / this.scale - imgW / this.scale) / 2;
-                ctx.rotate((rotate * 90 * Math.PI) / 180);
-                ctx.drawImage(
-                  img,
-                  -dy - imgW / this.scale,
-                  dx,
-                  imgW / this.scale,
-                  imgH / this.scale
-                );
-              }
-              break;
-            default:
-              if (!this.full) {
-                ctx.rotate((rotate * 90 * Math.PI) / 180);
-                ctx.drawImage(img, dx, dy, imgW, imgH);
-              } else {
-                // 输出原图比例截图
-                setCanvasSize(width / this.scale, height / this.scale);
-                ctx.rotate((rotate * 90 * Math.PI) / 180);
-                ctx.drawImage(
-                  img,
-                  dx / this.scale,
-                  dy / this.scale,
-                  imgW / this.scale,
-                  imgH / this.scale
-                );
-              }
+          // switch (rotate) {
+          //   case 0:
+          //     if (!this.full) {
+          //       ctx.drawImage(img, dx, dy, imgW, imgH);
+          //     } else {
+          //       // 输出原图比例截图
+          //       setCanvasSize(width / this.scale, height / this.scale);
+          //       ctx.drawImage(
+          //         img,
+          //         dx / this.scale,
+          //         dy / this.scale,
+          //         imgW / this.scale,
+          //         imgH / this.scale
+          //       );
+          //     }
+          //     break;
+          //   case 1:
+          //   case -3:
+          //     if (!this.full) {
+          //       // 换算图片旋转后的坐标弥补
+          //       dx = dx + (imgW - imgH) / 2;
+          //       dy = dy + (imgH - imgW) / 2;
+          //       ctx.rotate((rotate * 90 * Math.PI) / 180);
+          //       ctx.drawImage(img, dy, -dx - imgH, imgW, imgH);
+          //     } else {
+          //       setCanvasSize(width / this.scale, height / this.scale);
+          //       // 换算图片旋转后的坐标弥补
+          //       dx =
+          //         dx / this.scale + (imgW / this.scale - imgH / this.scale) / 2;
+          //       dy =
+          //         dy / this.scale + (imgH / this.scale - imgW / this.scale) / 2;
+          //       ctx.rotate((rotate * 90 * Math.PI) / 180);
+          //       ctx.drawImage(
+          //         img,
+          //         dy,
+          //         -dx - imgH / this.scale,
+          //         imgW / this.scale,
+          //         imgH / this.scale
+          //       );
+          //     }
+          //     break;
+          //   case 2:
+          //   case -2:
+          //     if (!this.full) {
+          //       ctx.rotate((rotate * 90 * Math.PI) / 180);
+          //       ctx.drawImage(img, -dx - imgW, -dy - imgH, imgW, imgH);
+          //     } else {
+          //       setCanvasSize(width / this.scale, height / this.scale);
+          //       ctx.rotate((rotate * 90 * Math.PI) / 180);
+          //       dx = dx / this.scale;
+          //       dy = dy / this.scale;
+          //       ctx.drawImage(
+          //         img,
+          //         -dx - imgW / this.scale,
+          //         -dy - imgH / this.scale,
+          //         imgW / this.scale,
+          //         imgH / this.scale
+          //       );
+          //     }
+          //     break;
+          //   case 3:
+          //   case -1:
+          //     if (!this.full) {
+          //       // 换算图片旋转后的坐标弥补
+          //       dx = dx + (imgW - imgH) / 2;
+          //       dy = dy + (imgH - imgW) / 2;
+          //       ctx.rotate((rotate * 90 * Math.PI) / 180);
+          //       ctx.drawImage(img, -dy - imgW, dx, imgW, imgH);
+          //     } else {
+          //       setCanvasSize(width / this.scale, height / this.scale);
+          //       // 换算图片旋转后的坐标弥补
+          //       dx =
+          //         dx / this.scale + (imgW / this.scale - imgH / this.scale) / 2;
+          //       dy =
+          //         dy / this.scale + (imgH / this.scale - imgW / this.scale) / 2;
+          //       ctx.rotate((rotate * 90 * Math.PI) / 180);
+          //       ctx.drawImage(
+          //         img,
+          //         -dy - imgW / this.scale,
+          //         dx,
+          //         imgW / this.scale,
+          //         imgH / this.scale
+          //       );
+          //     }
+          //     break;
+          //   default:
+          //     if (!this.full) {
+          //       ctx.rotate((rotate * 90 * Math.PI) / 180);
+          //       ctx.drawImage(img, dx, dy, imgW, imgH);
+          //     } else {
+          //       // 输出原图比例截图
+          //       setCanvasSize(width / this.scale, height / this.scale);
+          //       ctx.rotate((rotate * 90 * Math.PI) / 180);
+          //       ctx.drawImage(
+          //         img,
+          //         dx / this.scale,
+          //         dy / this.scale,
+          //         imgW / this.scale,
+          //         imgH / this.scale
+          //       );
+          //     }
+          // }
+
+          let rotate = this.rotate || 0;
+          // 将度数转换为弧度
+          const radX = (rotate * 90 * Math.PI) / 180;
+          // const signX = Math.sign(radX)
+          // const cosX = Math.cos(radX)
+          if (!this.full) {
+            ctx.translate(dx, dy);
+            ctx.rotate(radX);
+            ctx.drawImage(img, 0, 0, imgW, imgH);
+          } else {
+            // 输出原图比例截图
+            setCanvasSize(width / this.scale, height / this.scale);
+            ctx.translate(dx / this.scale, dy / this.scale);
+            ctx.rotate(radX);
+            ctx.drawImage(img, 0, 0, imgW / this.scale, imgH / this.scale);
           }
           
           ctx.restore();
