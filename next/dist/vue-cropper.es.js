@@ -1,29 +1,29 @@
-import { defineComponent as M, openBlock as C, createElementBlock as X, withDirectives as Y, createElementVNode as v, normalizeStyle as x, vShow as b, createCommentVNode as y, normalizeClass as S, toDisplayString as O } from "vue";
+import { defineComponent as M, openBlock as C, createElementBlock as X, withDirectives as Y, createElementVNode as v, normalizeStyle as x, vShow as b, createCommentVNode as y, normalizeClass as I, toDisplayString as O } from "vue";
 const H = {};
-H.getData = (t) => new Promise((e, i) => {
-  let s = {};
-  I(t).then((r) => {
-    s.arrayBuffer = r;
+H.getData = (t) => new Promise((e, s) => {
+  let i = {};
+  S(t).then((r) => {
+    i.arrayBuffer = r;
     try {
-      s.orientation = k(r);
+      i.orientation = k(r);
     } catch {
-      s.orientation = -1;
+      i.orientation = -1;
     }
-    e(s);
+    e(i);
   }).catch((r) => {
-    i(r);
+    s(r);
   });
 });
-function I(t) {
+function S(t) {
   let e = null;
-  return new Promise((i, s) => {
+  return new Promise((s, i) => {
     if (t.src)
       if (/^data\:/i.test(t.src))
-        e = L(t.src), i(e);
+        e = L(t.src), s(e);
       else if (/^blob\:/i.test(t.src)) {
         var r = new FileReader();
         r.onload = function(h) {
-          e = h.target.result, i(e);
+          e = h.target.result, s(e);
         }, E(t.src, function(h) {
           r.readAsArrayBuffer(h);
         });
@@ -31,38 +31,38 @@ function I(t) {
         var o = new XMLHttpRequest();
         o.onload = function() {
           if (this.status == 200 || this.status === 0)
-            e = o.response, i(e);
+            e = o.response, s(e);
           else
             throw "Could not load image";
           o = null;
         }, o.open("GET", t.src, !0), o.responseType = "arraybuffer", o.send(null);
       }
     else
-      s("img error");
+      i("img error");
   });
 }
 function E(t, e) {
-  var i = new XMLHttpRequest();
-  i.open("GET", t, !0), i.responseType = "blob", i.onload = function(s) {
+  var s = new XMLHttpRequest();
+  s.open("GET", t, !0), s.responseType = "blob", s.onload = function(i) {
     (this.status == 200 || this.status === 0) && e(this.response);
-  }, i.send();
+  }, s.send();
 }
 function L(t, e) {
   e = e || t.match(/^data\:([^\;]+)\;base64,/mi)[1] || "", t = t.replace(/^data\:([^\;]+)\;base64,/gmi, "");
-  for (var i = atob(t), s = i.length % 2 == 0 ? i.length : i.length + 1, r = new ArrayBuffer(s), o = new Uint16Array(r), h = 0; h < s; h++)
-    o[h] = i.charCodeAt(h);
+  for (var s = atob(t), i = s.length % 2 == 0 ? s.length : s.length + 1, r = new ArrayBuffer(i), o = new Uint16Array(r), h = 0; h < i; h++)
+    o[h] = s.charCodeAt(h);
   return r;
 }
-function T(t, e, i) {
-  var s = "", r;
-  for (r = e, i += e; r < i; r++)
-    s += String.fromCharCode(t.getUint8(r));
-  return s;
+function T(t, e, s) {
+  var i = "", r;
+  for (r = e, s += e; r < s; r++)
+    i += String.fromCharCode(t.getUint8(r));
+  return i;
 }
 function k(t) {
-  var e = new DataView(t), i = e.byteLength, s, r, o, h, n, l, c, a, p, f;
+  var e = new DataView(t), s = e.byteLength, i, r, o, h, n, l, c, a, p, f;
   if (e.getUint8(0) === 255 && e.getUint8(1) === 216)
-    for (p = 2; p < i; ) {
+    for (p = 2; p < s; ) {
       if (e.getUint8(p) === 255 && e.getUint8(p + 1) === 225) {
         c = p;
         break;
@@ -70,19 +70,19 @@ function k(t) {
       p++;
     }
   if (c && (r = c + 4, o = c + 10, T(e, r, 4) === "Exif" && (l = e.getUint16(o), n = l === 18761, (n || l === 19789) && e.getUint16(o + 2, n) === 42 && (h = e.getUint32(o + 4, n), h >= 8 && (a = o + h)))), a) {
-    for (i = e.getUint16(a, n), f = 0; f < i; f++)
+    for (s = e.getUint16(a, n), f = 0; f < s; f++)
       if (p = a + f * 12 + 2, e.getUint16(p, n) === 274) {
-        p += 8, s = e.getUint16(p, n);
+        p += 8, i = e.getUint16(p, n);
         break;
       }
   }
-  return s;
+  return i;
 }
 const $ = (t, e) => {
-  const i = t.__vccOpts || t;
-  for (const [s, r] of e)
-    i[s] = r;
-  return i;
+  const s = t.__vccOpts || t;
+  for (const [i, r] of e)
+    s[i] = r;
+  return s;
 }, N = M({
   data: function() {
     return {
@@ -349,14 +349,14 @@ const $ = (t, e) => {
   },
   methods: {
     getVersion(t) {
-      var e = navigator.userAgent.split(" "), i = "";
-      let s = 0;
+      var e = navigator.userAgent.split(" "), s = "";
+      let i = 0;
       const r = new RegExp(t, "i");
       for (var o = 0; o < e.length; o++)
-        r.test(e[o]) && (i = e[o]);
-      return i ? s = i.split("/")[1].split(".") : s = ["0", "0", "0"], s;
+        r.test(e[o]) && (s = e[o]);
+      return s ? i = s.split("/")[1].split(".") : i = ["0", "0", "0"], i;
     },
-    checkOrientationImage(t, e, i, s) {
+    checkOrientationImage(t, e, s, i) {
       if (this.getVersion("chrome")[0] >= 81)
         e = -1;
       else if (this.getVersion("safari")[0] >= 605) {
@@ -372,30 +372,30 @@ const $ = (t, e) => {
       let r = document.createElement("canvas"), o = r.getContext("2d");
       switch (o.save(), e) {
         case 2:
-          r.width = i, r.height = s, o.translate(i, 0), o.scale(-1, 1);
+          r.width = s, r.height = i, o.translate(s, 0), o.scale(-1, 1);
           break;
         case 3:
-          r.width = i, r.height = s, o.translate(i / 2, s / 2), o.rotate(180 * Math.PI / 180), o.translate(-i / 2, -s / 2);
+          r.width = s, r.height = i, o.translate(s / 2, i / 2), o.rotate(180 * Math.PI / 180), o.translate(-s / 2, -i / 2);
           break;
         case 4:
-          r.width = i, r.height = s, o.translate(0, s), o.scale(1, -1);
+          r.width = s, r.height = i, o.translate(0, i), o.scale(1, -1);
           break;
         case 5:
-          r.height = i, r.width = s, o.rotate(0.5 * Math.PI), o.scale(1, -1);
+          r.height = s, r.width = i, o.rotate(0.5 * Math.PI), o.scale(1, -1);
           break;
         case 6:
-          r.width = s, r.height = i, o.translate(s / 2, i / 2), o.rotate(90 * Math.PI / 180), o.translate(-i / 2, -s / 2);
+          r.width = i, r.height = s, o.translate(i / 2, s / 2), o.rotate(90 * Math.PI / 180), o.translate(-s / 2, -i / 2);
           break;
         case 7:
-          r.height = i, r.width = s, o.rotate(0.5 * Math.PI), o.translate(i, -s), o.scale(-1, 1);
+          r.height = s, r.width = i, o.rotate(0.5 * Math.PI), o.translate(s, -i), o.scale(-1, 1);
           break;
         case 8:
-          r.height = i, r.width = s, o.translate(s / 2, i / 2), o.rotate(-90 * Math.PI / 180), o.translate(-i / 2, -s / 2);
+          r.height = s, r.width = i, o.translate(i / 2, s / 2), o.rotate(-90 * Math.PI / 180), o.translate(-s / 2, -i / 2);
           break;
         default:
-          r.width = i, r.height = s;
+          r.width = s, r.height = i;
       }
-      o.drawImage(t, 0, 0, i, s), o.restore(), r.toBlob(
+      o.drawImage(t, 0, 0, s, i), o.restore(), r.toBlob(
         (h) => {
           let n = URL.createObjectURL(h);
           URL.revokeObjectURL(this.imgs), this.imgs = n;
@@ -415,25 +415,25 @@ const $ = (t, e) => {
       if (t.onload = () => {
         if (this.img === "")
           return this.$emit("img-load", new Error("图片不能为空")), !1;
-        let i = t.width, s = t.height;
+        let s = t.width, i = t.height;
         H.getData(t).then((r) => {
           this.orientation = r.orientation || 1;
           let o = Number(this.maxImgSize);
-          if (!this.orientation && i < o & s < o) {
+          if (!this.orientation && s < o & i < o) {
             this.imgs = this.img;
             return;
           }
-          i > o && (s = s / i * o, i = o), s > o && (i = i / s * o, s = o), this.checkOrientationImage(t, this.orientation, i, s);
+          s > o && (i = i / s * o, s = o), i > o && (s = s / i * o, i = o), this.checkOrientationImage(t, this.orientation, s, i);
         }).catch((r) => {
           this.$emit("img-load", "error"), this.$emit("img-load-error", r);
         });
-      }, t.onerror = (i) => {
-        this.$emit("img-load", "error"), this.$emit("img-load-error", i);
+      }, t.onerror = (s) => {
+        this.$emit("img-load", "error"), this.$emit("img-load-error", s);
       }, this.img.substr(0, 4) !== "data" && (t.crossOrigin = ""), this.isIE) {
         var e = new XMLHttpRequest();
         e.onload = function() {
-          var i = URL.createObjectURL(this.response);
-          t.src = i;
+          var s = URL.createObjectURL(this.response);
+          t.src = s;
         }, e.open("GET", this.img, !0), e.responseType = "blob", e.send();
       } else
         t.src = this.img;
@@ -454,10 +454,10 @@ const $ = (t, e) => {
     touchScale(t) {
       t.preventDefault();
       let e = this.scale;
-      var i = {
+      var s = {
         x: this.touches[0].clientX,
         y: this.touches[0].clientY
-      }, s = {
+      }, i = {
         x: t.touches[0].clientX,
         y: t.touches[0].clientY
       }, r = {
@@ -467,9 +467,9 @@ const $ = (t, e) => {
         x: t.touches[1].clientX,
         y: t.touches[1].clientY
       }, h = Math.sqrt(
-        Math.pow(i.x - r.x, 2) + Math.pow(i.y - r.y, 2)
+        Math.pow(s.x - r.x, 2) + Math.pow(s.y - r.y, 2)
       ), n = Math.sqrt(
-        Math.pow(s.x - o.x, 2) + Math.pow(s.y - o.y, 2)
+        Math.pow(i.x - o.x, 2) + Math.pow(i.y - o.y, 2)
       ), l = n - h, c = 1;
       c = c / this.trueWidth > c / this.trueHeight ? c / this.trueHeight : c / this.trueWidth, c = c > 0.1 ? 0.1 : c;
       var a = c * l;
@@ -488,10 +488,10 @@ const $ = (t, e) => {
     moveImg(t) {
       if (t.preventDefault(), t.touches && t.touches.length === 2)
         return this.touches = t.touches, window.addEventListener("touchmove", this.touchScale), window.addEventListener("touchend", this.cancelTouchScale), window.removeEventListener("touchmove", this.moveImg), !1;
-      let e = "clientX" in t ? t.clientX : t.touches[0].clientX, i = "clientY" in t ? t.clientY : t.touches[0].clientY, s, r;
-      s = e - this.moveX, r = i - this.moveY, this.$nextTick(() => {
+      let e = "clientX" in t ? t.clientX : t.touches[0].clientX, s = "clientY" in t ? t.clientY : t.touches[0].clientY, i, r;
+      i = e - this.moveX, r = s - this.moveY, this.$nextTick(() => {
         if (this.centerBox) {
-          let o = this.getImgAxis(s, r, this.scale), h = this.getCropAxis(), n = this.trueHeight * this.scale, l = this.trueWidth * this.scale, c, a, p, f;
+          let o = this.getImgAxis(i, r, this.scale), h = this.getCropAxis(), n = this.trueHeight * this.scale, l = this.trueWidth * this.scale, c, a, p, f;
           switch (this.rotate) {
             case 1:
             case -1:
@@ -503,9 +503,9 @@ const $ = (t, e) => {
               c = this.cropOffsertX - this.trueWidth * (1 - this.scale) / 2, a = this.cropOffsertY - this.trueHeight * (1 - this.scale) / 2, p = c - l + this.cropW, f = a - n + this.cropH;
               break;
           }
-          o.x1 >= h.x1 && (s = c), o.y1 >= h.y1 && (r = a), o.x2 <= h.x2 && (s = p), o.y2 <= h.y2 && (r = f);
+          o.x1 >= h.x1 && (i = c), o.y1 >= h.y1 && (r = a), o.x2 <= h.x2 && (i = p), o.y2 <= h.y2 && (r = f);
         }
-        this.x = s, this.y = r, this.$emit("img-moving", {
+        this.x = i, this.y = r, this.$emit("img-moving", {
           moving: !0,
           axis: this.getImgAxis()
         });
@@ -530,11 +530,11 @@ const $ = (t, e) => {
     changeSize(t) {
       t.preventDefault();
       let e = this.scale;
-      var i = t.deltaY || t.wheelDelta, s = navigator.userAgent.indexOf("Firefox");
-      i = s > 0 ? i * 30 : i, this.isIE && (i = -i);
+      var s = t.deltaY || t.wheelDelta, i = navigator.userAgent.indexOf("Firefox");
+      s = i > 0 ? s * 30 : s, this.isIE && (s = -s);
       var r = this.coe;
       r = r / this.trueWidth > r / this.trueHeight ? r / this.trueHeight : r / this.trueWidth;
-      var o = r * i;
+      var o = r * s;
       o < 0 ? e += Math.abs(o) : e > Math.abs(o) && (e -= Math.abs(o));
       let h = o < 0 ? "add" : "reduce";
       if (h !== this.coeStatus && (this.coeStatus = h, this.coe = 0.2), this.scaling || (this.scalingSet = setTimeout(() => {
@@ -547,28 +547,28 @@ const $ = (t, e) => {
     changeScale(t) {
       let e = this.scale;
       t = t || 1;
-      var i = 20;
-      if (i = i / this.trueWidth > i / this.trueHeight ? i / this.trueHeight : i / this.trueWidth, t = t * i, t > 0 ? e += Math.abs(t) : e > Math.abs(t) && (e -= Math.abs(t)), !this.checkoutImgAxis(this.x, this.y, e))
+      var s = 20;
+      if (s = s / this.trueWidth > s / this.trueHeight ? s / this.trueHeight : s / this.trueWidth, t = t * s, t > 0 ? e += Math.abs(t) : e > Math.abs(t) && (e -= Math.abs(t)), !this.checkoutImgAxis(this.x, this.y, e))
         return !1;
       this.scale = e;
     },
     // 创建截图框
     createCrop(t) {
       t.preventDefault();
-      var e = "clientX" in t ? t.clientX : t.touches ? t.touches[0].clientX : 0, i = "clientY" in t ? t.clientY : t.touches ? t.touches[0].clientY : 0;
+      var e = "clientX" in t ? t.clientX : t.touches ? t.touches[0].clientX : 0, s = "clientY" in t ? t.clientY : t.touches ? t.touches[0].clientY : 0;
       this.$nextTick(() => {
-        var s = e - this.cropX, r = i - this.cropY;
-        if (s > 0 ? (this.cropW = s + this.cropChangeX > this.w ? this.w - this.cropChangeX : s, this.cropOffsertX = this.cropChangeX) : (this.cropW = this.w - this.cropChangeX + Math.abs(s) > this.w ? this.cropChangeX : Math.abs(s), this.cropOffsertX = this.cropChangeX + s > 0 ? this.cropChangeX + s : 0), !this.fixed)
+        var i = e - this.cropX, r = s - this.cropY;
+        if (i > 0 ? (this.cropW = i + this.cropChangeX > this.w ? this.w - this.cropChangeX : i, this.cropOffsertX = this.cropChangeX) : (this.cropW = this.w - this.cropChangeX + Math.abs(i) > this.w ? this.cropChangeX : Math.abs(i), this.cropOffsertX = this.cropChangeX + i > 0 ? this.cropChangeX + i : 0), !this.fixed)
           r > 0 ? (this.cropH = r + this.cropChangeY > this.h ? this.h - this.cropChangeY : r, this.cropOffsertY = this.cropChangeY) : (this.cropH = this.h - this.cropChangeY + Math.abs(r) > this.h ? this.cropChangeY : Math.abs(r), this.cropOffsertY = this.cropChangeY + r > 0 ? this.cropChangeY + r : 0);
         else {
           var o = this.cropW / this.fixedNumber[0] * this.fixedNumber[1];
-          o + this.cropOffsertY > this.h ? (this.cropH = this.h - this.cropOffsertY, this.cropW = this.cropH / this.fixedNumber[1] * this.fixedNumber[0], s > 0 ? this.cropOffsertX = this.cropChangeX : this.cropOffsertX = this.cropChangeX - this.cropW) : this.cropH = o, this.cropOffsertY = this.cropOffsertY;
+          o + this.cropOffsertY > this.h ? (this.cropH = this.h - this.cropOffsertY, this.cropW = this.cropH / this.fixedNumber[1] * this.fixedNumber[0], i > 0 ? this.cropOffsertX = this.cropChangeX : this.cropOffsertX = this.cropChangeX - this.cropW) : this.cropH = o, this.cropOffsertY = this.cropOffsertY;
         }
       });
     },
     // 改变截图框大小
-    changeCropSize(t, e, i, s, r) {
-      t.preventDefault(), window.addEventListener("mousemove", this.changeCropNow), window.addEventListener("mouseup", this.changeCropEnd), window.addEventListener("touchmove", this.changeCropNow), window.addEventListener("touchend", this.changeCropEnd), this.canChangeX = e, this.canChangeY = i, this.changeCropTypeX = s, this.changeCropTypeY = r, this.cropX = "clientX" in t ? t.clientX : t.touches[0].clientX, this.cropY = "clientY" in t ? t.clientY : t.touches[0].clientY, this.cropOldW = this.cropW, this.cropOldH = this.cropH, this.cropChangeX = this.cropOffsertX, this.cropChangeY = this.cropOffsertY, this.fixed && this.canChangeX && this.canChangeY && (this.canChangeY = 0), this.$emit("change-crop-size", {
+    changeCropSize(t, e, s, i, r) {
+      t.preventDefault(), window.addEventListener("mousemove", this.changeCropNow), window.addEventListener("mouseup", this.changeCropEnd), window.addEventListener("touchmove", this.changeCropNow), window.addEventListener("touchend", this.changeCropEnd), this.canChangeX = e, this.canChangeY = s, this.changeCropTypeX = i, this.changeCropTypeY = r, this.cropX = "clientX" in t ? t.clientX : t.touches[0].clientX, this.cropY = "clientY" in t ? t.clientY : t.touches[0].clientY, this.cropOldW = this.cropW, this.cropOldH = this.cropH, this.cropChangeX = this.cropOffsertX, this.cropChangeY = this.cropOffsertY, this.fixed && this.canChangeX && this.canChangeY && (this.canChangeY = 0), this.$emit("change-crop-size", {
         width: this.cropW,
         height: this.cropH
       });
@@ -576,44 +576,44 @@ const $ = (t, e) => {
     // 正在改变
     changeCropNow(t) {
       t.preventDefault();
-      var e = "clientX" in t ? t.clientX : t.touches ? t.touches[0].clientX : 0, i = "clientY" in t ? t.clientY : t.touches ? t.touches[0].clientY : 0;
-      let s = this.w, r = this.h, o = 0, h = 0;
+      var e = "clientX" in t ? t.clientX : t.touches ? t.touches[0].clientX : 0, s = "clientY" in t ? t.clientY : t.touches ? t.touches[0].clientY : 0;
+      let i = this.w, r = this.h, o = 0, h = 0;
       if (this.centerBox) {
         let c = this.getImgAxis(), a = c.x2, p = c.y2;
-        o = c.x1 > 0 ? c.x1 : 0, h = c.y1 > 0 ? c.y1 : 0, s > a && (s = a), r > p && (r = p);
+        o = c.x1 > 0 ? c.x1 : 0, h = c.y1 > 0 ? c.y1 : 0, i > a && (i = a), r > p && (r = p);
       }
       const [n, l] = this.checkCropLimitSize();
       this.$nextTick(() => {
-        var c = e - this.cropX, a = i - this.cropY;
-        if (this.canChangeX && (this.changeCropTypeX === 1 ? this.cropOldW - c < n ? (this.cropW = n, this.cropOffsertX = this.cropOldW + this.cropChangeX - o - n) : this.cropOldW - c > 0 ? (this.cropW = s - this.cropChangeX - c <= s - o ? this.cropOldW - c : this.cropOldW + this.cropChangeX - o, this.cropOffsertX = s - this.cropChangeX - c <= s - o ? this.cropChangeX + c : o) : (this.cropW = Math.abs(c) + this.cropChangeX <= s ? Math.abs(c) - this.cropOldW : s - this.cropOldW - this.cropChangeX, this.cropOffsertX = this.cropChangeX + this.cropOldW) : this.changeCropTypeX === 2 && (this.cropOldW + c < n ? this.cropW = n : this.cropOldW + c > 0 ? (this.cropW = this.cropOldW + c + this.cropOffsertX <= s ? this.cropOldW + c : s - this.cropOffsertX, this.cropOffsertX = this.cropChangeX) : (this.cropW = s - this.cropChangeX + Math.abs(c + this.cropOldW) <= s - o ? Math.abs(c + this.cropOldW) : this.cropChangeX - o, this.cropOffsertX = s - this.cropChangeX + Math.abs(c + this.cropOldW) <= s - o ? this.cropChangeX - Math.abs(c + this.cropOldW) : o))), this.canChangeY && (this.changeCropTypeY === 1 ? this.cropOldH - a < l ? (this.cropH = l, this.cropOffsertY = this.cropOldH + this.cropChangeY - h - l) : this.cropOldH - a > 0 ? (this.cropH = r - this.cropChangeY - a <= r - h ? this.cropOldH - a : this.cropOldH + this.cropChangeY - h, this.cropOffsertY = r - this.cropChangeY - a <= r - h ? this.cropChangeY + a : h) : (this.cropH = Math.abs(a) + this.cropChangeY <= r ? Math.abs(a) - this.cropOldH : r - this.cropOldH - this.cropChangeY, this.cropOffsertY = this.cropChangeY + this.cropOldH) : this.changeCropTypeY === 2 && (this.cropOldH + a < l ? this.cropH = l : this.cropOldH + a > 0 ? (this.cropH = this.cropOldH + a + this.cropOffsertY <= r ? this.cropOldH + a : r - this.cropOffsertY, this.cropOffsertY = this.cropChangeY) : (this.cropH = r - this.cropChangeY + Math.abs(a + this.cropOldH) <= r - h ? Math.abs(a + this.cropOldH) : this.cropChangeY - h, this.cropOffsertY = r - this.cropChangeY + Math.abs(a + this.cropOldH) <= r - h ? this.cropChangeY - Math.abs(a + this.cropOldH) : h))), this.canChangeX && this.fixed) {
+        var c = e - this.cropX, a = s - this.cropY;
+        if (this.canChangeX && (this.changeCropTypeX === 1 ? this.cropOldW - c < n ? (this.cropW = n, this.cropOffsertX = this.cropOldW + this.cropChangeX - o - n) : this.cropOldW - c > 0 ? (this.cropW = i - this.cropChangeX - c <= i - o ? this.cropOldW - c : this.cropOldW + this.cropChangeX - o, this.cropOffsertX = i - this.cropChangeX - c <= i - o ? this.cropChangeX + c : o) : (this.cropW = Math.abs(c) + this.cropChangeX <= i ? Math.abs(c) - this.cropOldW : i - this.cropOldW - this.cropChangeX, this.cropOffsertX = this.cropChangeX + this.cropOldW) : this.changeCropTypeX === 2 && (this.cropOldW + c < n ? this.cropW = n : this.cropOldW + c > 0 ? (this.cropW = this.cropOldW + c + this.cropOffsertX <= i ? this.cropOldW + c : i - this.cropOffsertX, this.cropOffsertX = this.cropChangeX) : (this.cropW = i - this.cropChangeX + Math.abs(c + this.cropOldW) <= i - o ? Math.abs(c + this.cropOldW) : this.cropChangeX - o, this.cropOffsertX = i - this.cropChangeX + Math.abs(c + this.cropOldW) <= i - o ? this.cropChangeX - Math.abs(c + this.cropOldW) : o))), this.canChangeY && (this.changeCropTypeY === 1 ? this.cropOldH - a < l ? (this.cropH = l, this.cropOffsertY = this.cropOldH + this.cropChangeY - h - l) : this.cropOldH - a > 0 ? (this.cropH = r - this.cropChangeY - a <= r - h ? this.cropOldH - a : this.cropOldH + this.cropChangeY - h, this.cropOffsertY = r - this.cropChangeY - a <= r - h ? this.cropChangeY + a : h) : (this.cropH = Math.abs(a) + this.cropChangeY <= r ? Math.abs(a) - this.cropOldH : r - this.cropOldH - this.cropChangeY, this.cropOffsertY = this.cropChangeY + this.cropOldH) : this.changeCropTypeY === 2 && (this.cropOldH + a < l ? this.cropH = l : this.cropOldH + a > 0 ? (this.cropH = this.cropOldH + a + this.cropOffsertY <= r ? this.cropOldH + a : r - this.cropOffsertY, this.cropOffsertY = this.cropChangeY) : (this.cropH = r - this.cropChangeY + Math.abs(a + this.cropOldH) <= r - h ? Math.abs(a + this.cropOldH) : this.cropChangeY - h, this.cropOffsertY = r - this.cropChangeY + Math.abs(a + this.cropOldH) <= r - h ? this.cropChangeY - Math.abs(a + this.cropOldH) : h))), this.canChangeX && this.fixed) {
           var p = this.cropW / this.fixedNumber[0] * this.fixedNumber[1];
           p < l ? (this.cropH = l, this.cropW = this.fixedNumber[0] * l / this.fixedNumber[1], this.changeCropTypeX === 1 && (this.cropOffsertX = this.cropChangeX + (this.cropOldW - this.cropW))) : p + this.cropOffsertY > r ? (this.cropH = r - this.cropOffsertY, this.cropW = this.cropH / this.fixedNumber[1] * this.fixedNumber[0], this.changeCropTypeX === 1 && (this.cropOffsertX = this.cropChangeX + (this.cropOldW - this.cropW))) : this.cropH = p;
         }
         if (this.canChangeY && this.fixed) {
           var f = this.cropH / this.fixedNumber[1] * this.fixedNumber[0];
-          f < n ? (this.cropW = n, this.cropH = this.fixedNumber[1] * n / this.fixedNumber[0], this.cropOffsertY = this.cropOldH + this.cropChangeY - this.cropH) : f + this.cropOffsertX > s ? (this.cropW = s - this.cropOffsertX, this.cropH = this.cropW / this.fixedNumber[0] * this.fixedNumber[1]) : this.cropW = f;
+          f < n ? (this.cropW = n, this.cropH = this.fixedNumber[1] * n / this.fixedNumber[0], this.cropOffsertY = this.cropOldH + this.cropChangeY - this.cropH) : f + this.cropOffsertX > i ? (this.cropW = i - this.cropOffsertX, this.cropH = this.cropW / this.fixedNumber[0] * this.fixedNumber[1]) : this.cropW = f;
         }
       });
     },
     checkCropLimitSize() {
-      let { cropW: t, cropH: e, limitMinSize: i } = this, s = new Array();
-      return Array.isArray(i) ? s = i : s = [i, i], t = parseFloat(s[0]), e = parseFloat(s[1]), [t, e];
+      let { cropW: t, cropH: e, limitMinSize: s } = this, i = new Array();
+      return Array.isArray(s) ? i = s : i = [s, s], t = parseFloat(i[0]), e = parseFloat(i[1]), [t, e];
     },
     // 结束改变
     changeCropEnd(t) {
       window.removeEventListener("mousemove", this.changeCropNow), window.removeEventListener("mouseup", this.changeCropEnd), window.removeEventListener("touchmove", this.changeCropNow), window.removeEventListener("touchend", this.changeCropEnd);
     },
     // 根据比例x/y，最小宽度，最小高度，现有宽度，现有高度，得到应该有的宽度和高度
-    calculateSize(t, e, i, s, r, o) {
+    calculateSize(t, e, s, i, r, o) {
       const h = t / e;
       let n = r, l = o;
-      return n < i && (n = i, l = Math.ceil(n / h)), l < s && (l = s, n = Math.ceil(l * h), n < i && (n = i, l = Math.ceil(n / h))), n < r && (n = r, l = Math.ceil(n / h)), l < o && (l = o, n = Math.ceil(l * h)), { width: n, height: l };
+      return n < s && (n = s, l = Math.ceil(n / h)), l < i && (l = i, n = Math.ceil(l * h), n < s && (n = s, l = Math.ceil(n / h))), n < r && (n = r, l = Math.ceil(n / h)), l < o && (l = o, n = Math.ceil(l * h)), { width: n, height: l };
     },
     // 创建完成
     endCrop() {
       this.cropW === 0 && this.cropH === 0 && (this.cropping = !1);
       let [t, e] = this.checkCropLimitSize();
-      const { width: i, height: s } = this.fixed ? this.calculateSize(
+      const { width: s, height: i } = this.fixed ? this.calculateSize(
         this.fixedNumber[0],
         this.fixedNumber[1],
         t,
@@ -621,7 +621,7 @@ const $ = (t, e) => {
         this.cropW,
         this.cropH
       ) : { width: t, height: e };
-      i > this.cropW && (this.cropW = i, this.cropOffsertX + i > this.w && (this.cropOffsertX = this.w - i)), s > this.cropH && (this.cropH = s, this.cropOffsertY + s > this.h && (this.cropOffsertY = this.h - s)), window.removeEventListener("mousemove", this.createCrop), window.removeEventListener("mouseup", this.endCrop), window.removeEventListener("touchmove", this.createCrop), window.removeEventListener("touchend", this.endCrop);
+      s > this.cropW && (this.cropW = s, this.cropOffsertX + s > this.w && (this.cropOffsertX = this.w - s)), i > this.cropH && (this.cropH = i, this.cropOffsertY + i > this.h && (this.cropOffsertY = this.h - i)), window.removeEventListener("mousemove", this.createCrop), window.removeEventListener("mouseup", this.endCrop), window.removeEventListener("touchmove", this.createCrop), window.removeEventListener("touchend", this.endCrop);
     },
     // 开始截图
     startCrop() {
@@ -642,16 +642,16 @@ const $ = (t, e) => {
       if (t.touches && t.touches.length === 2)
         return this.crop = !1, this.startMove(t), this.leaveCrop(), !1;
       window.addEventListener("mousemove", this.moveCrop), window.addEventListener("mouseup", this.leaveCrop), window.addEventListener("touchmove", this.moveCrop), window.addEventListener("touchend", this.leaveCrop);
-      let e = "clientX" in t ? t.clientX : t.touches[0].clientX, i = "clientY" in t ? t.clientY : t.touches[0].clientY, s, r;
-      s = e - this.cropOffsertX, r = i - this.cropOffsertY, this.cropX = s, this.cropY = r, this.$emit("crop-moving", {
+      let e = "clientX" in t ? t.clientX : t.touches[0].clientX, s = "clientY" in t ? t.clientY : t.touches[0].clientY, i, r;
+      i = e - this.cropOffsertX, r = s - this.cropOffsertY, this.cropX = i, this.cropY = r, this.$emit("crop-moving", {
         moving: !0,
         axis: this.getCropAxis()
       });
     },
     moveCrop(t, e) {
-      let i = 0, s = 0;
-      t && (t.preventDefault(), i = "clientX" in t ? t.clientX : t.touches[0].clientX, s = "clientY" in t ? t.clientY : t.touches[0].clientY), this.$nextTick(() => {
-        let r, o, h = i - this.cropX, n = s - this.cropY;
+      let s = 0, i = 0;
+      t && (t.preventDefault(), s = "clientX" in t ? t.clientX : t.touches[0].clientX, i = "clientY" in t ? t.clientY : t.touches[0].clientY), this.$nextTick(() => {
+        let r, o, h = s - this.cropX, n = i - this.cropY;
         if (e && (h = this.cropOffsertX, n = this.cropOffsertY), h <= 0 ? r = 0 : h + this.cropW > this.w ? r = this.w - this.cropW : r = h, n <= 0 ? o = 0 : n + this.cropH > this.h ? o = this.h - this.cropH : o = n, this.centerBox) {
           let l = this.getImgAxis();
           r <= l.x1 && (r = l.x1), r + this.cropW > l.x2 && (r = l.x2 - this.cropW), o <= l.y1 && (o = l.y1), o + this.cropH > l.y2 && (o = l.y2 - this.cropH);
@@ -663,29 +663,29 @@ const $ = (t, e) => {
       });
     },
     // 算出不同场景下面 图片相对于外层容器的坐标轴
-    getImgAxis(t, e, i) {
-      t = t || this.x, e = e || this.y, i = i || this.scale;
-      let s = {
+    getImgAxis(t, e, s) {
+      t = t || this.x, e = e || this.y, s = s || this.scale;
+      let i = {
         x1: 0,
         x2: 0,
         y1: 0,
         y2: 0
-      }, r = this.trueWidth * i, o = this.trueHeight * i;
+      }, r = this.trueWidth * s, o = this.trueHeight * s;
       switch (this.rotate) {
         case 0:
-          s.x1 = t + this.trueWidth * (1 - i) / 2, s.x2 = s.x1 + this.trueWidth * i, s.y1 = e + this.trueHeight * (1 - i) / 2, s.y2 = s.y1 + this.trueHeight * i;
+          i.x1 = t + this.trueWidth * (1 - s) / 2, i.x2 = i.x1 + this.trueWidth * s, i.y1 = e + this.trueHeight * (1 - s) / 2, i.y2 = i.y1 + this.trueHeight * s;
           break;
         case 1:
         case -1:
         case 3:
         case -3:
-          s.x1 = t + this.trueWidth * (1 - i) / 2 + (r - o) / 2, s.x2 = s.x1 + this.trueHeight * i, s.y1 = e + this.trueHeight * (1 - i) / 2 + (o - r) / 2, s.y2 = s.y1 + this.trueWidth * i;
+          i.x1 = t + this.trueWidth * (1 - s) / 2 + (r - o) / 2, i.x2 = i.x1 + this.trueHeight * s, i.y1 = e + this.trueHeight * (1 - s) / 2 + (o - r) / 2, i.y2 = i.y1 + this.trueWidth * s;
           break;
         default:
-          s.x1 = t + this.trueWidth * (1 - i) / 2, s.x2 = s.x1 + this.trueWidth * i, s.y1 = e + this.trueHeight * (1 - i) / 2, s.y2 = s.y1 + this.trueHeight * i;
+          i.x1 = t + this.trueWidth * (1 - s) / 2, i.x2 = i.x1 + this.trueWidth * s, i.y1 = e + this.trueHeight * (1 - s) / 2, i.y2 = i.y1 + this.trueHeight * s;
           break;
       }
-      return s;
+      return i;
     },
     // 获取截图框的坐标轴
     getCropAxis() {
@@ -704,60 +704,60 @@ const $ = (t, e) => {
       });
     },
     getCropChecked(t) {
-      let e = document.createElement("canvas"), i = new Image(), s = this.rotate, r = this.trueWidth, o = this.trueHeight, h = this.cropOffsertX, n = this.cropOffsertY;
-      i.onload = () => {
+      let e = document.createElement("canvas"), s = new Image(), i = this.rotate, r = this.trueWidth, o = this.trueHeight, h = this.cropOffsertX, n = this.cropOffsertY;
+      s.onload = () => {
         if (this.cropW !== 0) {
           let a = e.getContext("2d"), p = 1;
           this.high & !this.full && (p = window.devicePixelRatio), this.enlarge !== 1 & !this.full && (p = Math.abs(Number(this.enlarge)));
           let f = this.cropW * p, w = this.cropH * p, u = r * this.scale * p, d = o * this.scale * p, g = (this.x - h + this.trueWidth * (1 - this.scale) / 2) * p, m = (this.y - n + this.trueHeight * (1 - this.scale) / 2) * p;
-          switch (c(f, w), a.save(), this.fillColor && (a.fillStyle = this.fillColor, a.fillRect(0, 0, e.width, e.height)), s) {
+          switch (c(f, w), a.save(), this.fillColor && (a.fillStyle = this.fillColor, a.fillRect(0, 0, e.width, e.height)), i) {
             case 0:
               this.full ? (c(f / this.scale, w / this.scale), a.drawImage(
-                i,
+                s,
                 g / this.scale,
                 m / this.scale,
                 u / this.scale,
                 d / this.scale
-              )) : a.drawImage(i, g, m, u, d);
+              )) : a.drawImage(s, g, m, u, d);
               break;
             case 1:
             case -3:
-              this.full ? (c(f / this.scale, w / this.scale), g = g / this.scale + (u / this.scale - d / this.scale) / 2, m = m / this.scale + (d / this.scale - u / this.scale) / 2, a.rotate(s * 90 * Math.PI / 180), a.drawImage(
-                i,
+              this.full ? (c(f / this.scale, w / this.scale), g = g / this.scale + (u / this.scale - d / this.scale) / 2, m = m / this.scale + (d / this.scale - u / this.scale) / 2, a.rotate(i * 90 * Math.PI / 180), a.drawImage(
+                s,
                 m,
                 -g - d / this.scale,
                 u / this.scale,
                 d / this.scale
-              )) : (g = g + (u - d) / 2, m = m + (d - u) / 2, a.rotate(s * 90 * Math.PI / 180), a.drawImage(i, m, -g - d, u, d));
+              )) : (g = g + (u - d) / 2, m = m + (d - u) / 2, a.rotate(i * 90 * Math.PI / 180), a.drawImage(s, m, -g - d, u, d));
               break;
             case 2:
             case -2:
-              this.full ? (c(f / this.scale, w / this.scale), a.rotate(s * 90 * Math.PI / 180), g = g / this.scale, m = m / this.scale, a.drawImage(
-                i,
+              this.full ? (c(f / this.scale, w / this.scale), a.rotate(i * 90 * Math.PI / 180), g = g / this.scale, m = m / this.scale, a.drawImage(
+                s,
                 -g - u / this.scale,
                 -m - d / this.scale,
                 u / this.scale,
                 d / this.scale
-              )) : (a.rotate(s * 90 * Math.PI / 180), a.drawImage(i, -g - u, -m - d, u, d));
+              )) : (a.rotate(i * 90 * Math.PI / 180), a.drawImage(s, -g - u, -m - d, u, d));
               break;
             case 3:
             case -1:
-              this.full ? (c(f / this.scale, w / this.scale), g = g / this.scale + (u / this.scale - d / this.scale) / 2, m = m / this.scale + (d / this.scale - u / this.scale) / 2, a.rotate(s * 90 * Math.PI / 180), a.drawImage(
-                i,
+              this.full ? (c(f / this.scale, w / this.scale), g = g / this.scale + (u / this.scale - d / this.scale) / 2, m = m / this.scale + (d / this.scale - u / this.scale) / 2, a.rotate(i * 90 * Math.PI / 180), a.drawImage(
+                s,
                 -m - u / this.scale,
                 g,
                 u / this.scale,
                 d / this.scale
-              )) : (g = g + (u - d) / 2, m = m + (d - u) / 2, a.rotate(s * 90 * Math.PI / 180), a.drawImage(i, -m - u, g, u, d));
+              )) : (g = g + (u - d) / 2, m = m + (d - u) / 2, a.rotate(i * 90 * Math.PI / 180), a.drawImage(s, -m - u, g, u, d));
               break;
             default:
-              this.full ? (c(f / this.scale, w / this.scale), a.drawImage(
-                i,
+              this.full ? (c(f / this.scale, w / this.scale), a.rotate(i * 90 * Math.PI / 180), a.drawImage(
+                s,
                 g / this.scale,
                 m / this.scale,
                 u / this.scale,
                 d / this.scale
-              )) : a.drawImage(i, g, m, u, d);
+              )) : (a.rotate(i * 90 * Math.PI / 180), a.drawImage(s, g, m, u, d));
           }
           a.restore();
         } else {
@@ -770,31 +770,31 @@ const $ = (t, e) => {
             const w = Math.cos(rotateX * Math.PI / 180), u = a / 2 - a * w / 2;
             f.transform(1, 0, 0, w, 0, u);
           }
-          switch (s) {
+          switch (i) {
             case 0:
-              c(a, p), f.drawImage(i, 0, 0, a, p);
+              c(a, p), f.drawImage(s, 0, 0, a, p);
               break;
             case 1:
             case -3:
-              c(p, a), f.rotate(s * 90 * Math.PI / 180), f.drawImage(i, 0, -p, a, p);
+              c(p, a), f.rotate(i * 90 * Math.PI / 180), f.drawImage(s, 0, -p, a, p);
               break;
             case 2:
             case -2:
-              c(a, p), f.rotate(s * 90 * Math.PI / 180), f.drawImage(i, -a, -p, a, p);
+              c(a, p), f.rotate(i * 90 * Math.PI / 180), f.drawImage(s, -a, -p, a, p);
               break;
             case 3:
             case -1:
-              c(p, a), f.rotate(s * 90 * Math.PI / 180), f.drawImage(i, -a, 0, a, p);
+              c(p, a), f.rotate(i * 90 * Math.PI / 180), f.drawImage(s, -a, 0, a, p);
               break;
             default:
-              c(a, p), f.drawImage(i, 0, 0, a, p);
+              c(a, p), f.rotate(i * 90 * Math.PI / 180), f.drawImage(s, 0, 0, a, p);
           }
           f.restore();
         }
         t(e);
       };
       var l = this.img.substr(0, 4);
-      l !== "data" && (i.crossOrigin = "Anonymous"), i.src = this.imgs;
+      l !== "data" && (s.crossOrigin = "Anonymous"), s.src = this.imgs;
       function c(a, p) {
         e.width = Math.round(a), e.height = Math.round(p);
       }
@@ -809,7 +809,7 @@ const $ = (t, e) => {
     getCropBlob(t) {
       this.getCropChecked((e) => {
         e.toBlob(
-          (i) => t(i),
+          (s) => t(s),
           "image/" + this.outputType,
           this.outputSize
         );
@@ -823,24 +823,24 @@ const $ = (t, e) => {
         }, 16);
       else
         return !1;
-      let t = this.cropW, e = this.cropH, i = this.scale;
-      var s = {};
-      s.div = {
+      let t = this.cropW, e = this.cropH, s = this.scale;
+      var i = {};
+      i.div = {
         width: `${t}px`,
         height: `${e}px`
       };
-      let r = (this.x - this.cropOffsertX) / i, o = (this.y - this.cropOffsertY) / i, h = 0;
-      s.w = t, s.h = e, s.url = this.imgs, s.img = {
+      let r = (this.x - this.cropOffsertX) / s, o = (this.y - this.cropOffsertY) / s, h = 0;
+      i.w = t, i.h = e, i.url = this.imgs, i.img = {
         width: `${this.trueWidth}px`,
         height: `${this.trueHeight}px`,
-        transform: `scale(${i})translate3d(${r}px, ${o}px, ${h}px)rotateZ(${this.rotate * 90}deg) perspective(1000px) rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg)`
-      }, s.html = `
-      <div class="show-preview" style="width: ${s.w}px; height: ${s.h}px,; overflow: hidden">
+        transform: `scale(${s})translate3d(${r}px, ${o}px, ${h}px)rotateZ(${this.rotate * 90}deg) perspective(1000px) rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg)`
+      }, i.html = `
+      <div class="show-preview" style="width: ${i.w}px; height: ${i.h}px,; overflow: hidden">
         <div style="width: ${t}px; height: ${e}px">
-          <img src=${s.url} style="width: ${this.trueWidth}px; height: ${this.trueHeight}px; transform:
-          scale(${i})translate3d(${r}px, ${o}px, ${h}px)rotateZ(${this.rotate * 90}deg) perspective(1000px) rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg)">
+          <img src=${i.url} style="width: ${this.trueWidth}px; height: ${this.trueHeight}px; transform:
+          scale(${s})translate3d(${r}px, ${o}px, ${h}px)rotateZ(${this.rotate * 90}deg) perspective(1000px) rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg)">
         </div>
-      </div>`, this.$emit("real-time", s);
+      </div>`, this.$emit("real-time", i);
     },
     // reload 图片布局函数
     reload() {
@@ -857,27 +857,27 @@ const $ = (t, e) => {
     },
     // 背景布局的函数
     checkedMode() {
-      let t = 1, e = this.trueWidth, i = this.trueHeight;
-      const s = this.mode.split(" ");
-      switch (s[0]) {
+      let t = 1, e = this.trueWidth, s = this.trueHeight;
+      const i = this.mode.split(" ");
+      switch (i[0]) {
         case "contain":
           this.trueWidth > this.w && (t = this.w / this.trueWidth), this.trueHeight * t > this.h && (t = this.h / this.trueHeight);
           break;
         case "cover":
-          e = this.w, t = e / this.trueWidth, i = i * t, i < this.h && (i = this.h, t = i / this.trueHeight);
+          e = this.w, t = e / this.trueWidth, s = s * t, s < this.h && (s = this.h, t = s / this.trueHeight);
           break;
         default:
           try {
-            let r = s[0];
+            let r = i[0];
             if (r.search("px") !== -1) {
               r = r.replace("px", ""), e = parseFloat(r);
               const o = e / this.trueWidth;
-              let h = 1, n = s[1];
-              n.search("px") !== -1 && (n = n.replace("px", ""), i = parseFloat(n), h = i / this.trueHeight), t = Math.min(o, h);
+              let h = 1, n = i[1];
+              n.search("px") !== -1 && (n = n.replace("px", ""), s = parseFloat(n), h = s / this.trueHeight), t = Math.min(o, h);
             }
-            if (r.search("%") !== -1 && (r = r.replace("%", ""), e = parseFloat(r) / 100 * this.w, t = e / this.trueWidth, this.trueHeight * t > this.h && (t = this.h / this.trueHeight)), s.length === 2 && r === "auto") {
-              let o = s[1];
-              o.search("px") !== -1 && (o = o.replace("px", ""), i = parseFloat(o), t = i / this.trueHeight), o.search("%") !== -1 && (o = o.replace("%", ""), i = parseFloat(o) / 100 * this.h, t = i / this.trueHeight);
+            if (r.search("%") !== -1 && (r = r.replace("%", ""), e = parseFloat(r) / 100 * this.w, t = e / this.trueWidth, this.trueHeight * t > this.h && (t = this.h / this.trueHeight)), i.length === 2 && r === "auto") {
+              let o = i[1];
+              o.search("px") !== -1 && (o = o.replace("px", ""), s = parseFloat(o), t = s / this.trueHeight), o.search("%") !== -1 && (o = o.replace("%", ""), s = parseFloat(o) / 100 * this.h, t = s / this.trueHeight);
             }
           } catch {
             t = 1;
@@ -890,21 +890,21 @@ const $ = (t, e) => {
       if (this.imgs === "" || this.imgs === null)
         return;
       this.clearCrop(), this.cropping = !0;
-      let i = this.w, s = this.h;
+      let s = this.w, i = this.h;
       if (this.centerBox) {
         const h = Math.abs(this.rotate) % 2 > 0;
         let n = (h ? this.trueHeight : this.trueWidth) * this.scale, l = (h ? this.trueWidth : this.trueHeight) * this.scale;
-        i = n < i ? n : i, s = l < s ? l : s;
+        s = n < s ? n : s, i = l < i ? l : i;
       }
       var r = t || parseFloat(this.autoCropWidth), o = e || parseFloat(this.autoCropHeight);
-      (r === 0 || o === 0) && (r = i * 0.8, o = s * 0.8), r = r > i ? i : r, o = o > s ? s : o, this.fixed && (o = r / this.fixedNumber[0] * this.fixedNumber[1]), o > this.h && (o = this.h, r = o / this.fixedNumber[1] * this.fixedNumber[0]), this.changeCrop(r, o);
+      (r === 0 || o === 0) && (r = s * 0.8, o = i * 0.8), r = r > s ? s : r, o = o > i ? i : o, this.fixed && (o = r / this.fixedNumber[0] * this.fixedNumber[1]), o > this.h && (o = this.h, r = o / this.fixedNumber[1] * this.fixedNumber[0]), this.changeCrop(r, o);
     },
     // 手动改变截图框大小函数
     changeCrop(t, e) {
       if (this.centerBox) {
-        let i = this.getImgAxis(), s = i.x2 - i.x1;
-        t > s && (t > s + 1 ? (t = s, e = t / this.fixedNumber[0] * this.fixedNumber[1]) : t = s);
-        let r = i.y2 - i.y1;
+        let s = this.getImgAxis(), i = s.x2 - s.x1;
+        t > i && (t > i + 1 ? (t = i, e = t / this.fixedNumber[0] * this.fixedNumber[1]) : t = i);
+        let r = s.y2 - s.y1;
         e > r && (e > r + 1 ? (e = r, t = e / this.fixedNumber[1] * this.fixedNumber[0]) : e = r);
       }
       this.cropW = t, this.cropH = e, this.checkCropLimitSize(), this.$nextTick(() => {
@@ -939,14 +939,14 @@ const $ = (t, e) => {
       this.rotate = 0;
     },
     // 图片坐标点校验
-    checkoutImgAxis(t, e, i) {
-      t = t || this.x, e = e || this.y, i = i || this.scale;
-      let s = !0;
+    checkoutImgAxis(t, e, s) {
+      t = t || this.x, e = e || this.y, s = s || this.scale;
+      let i = !0;
       if (this.centerBox) {
-        let r = this.getImgAxis(t, e, i), o = this.getCropAxis();
-        r.x1 >= o.x1 && (s = !1), r.x2 <= o.x2 && (s = !1), r.y1 >= o.y1 && (s = !1), r.y2 <= o.y2 && (s = !1);
+        let r = this.getImgAxis(t, e, s), o = this.getCropAxis();
+        r.x1 >= o.x1 && (i = !1), r.x2 <= o.x2 && (i = !1), r.y1 >= o.y1 && (i = !1), r.y2 <= o.y2 && (i = !1);
       }
-      return s;
+      return i;
     }
   },
   mounted() {
@@ -954,10 +954,10 @@ const $ = (t, e) => {
     let t = this;
     var e = navigator.userAgent;
     this.isIOS = !!e.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), HTMLCanvasElement.prototype.toBlob || Object.defineProperty(HTMLCanvasElement.prototype, "toBlob", {
-      value: function(i, s, r) {
-        for (var o = atob(this.toDataURL(s, r).split(",")[1]), h = o.length, n = new Uint8Array(h), l = 0; l < h; l++)
+      value: function(s, i, r) {
+        for (var o = atob(this.toDataURL(i, r).split(",")[1]), h = o.length, n = new Uint8Array(h), l = 0; l < h; l++)
           n[l] = o.charCodeAt(l);
-        i(new Blob([n], { type: t.type || "image/png" }));
+        s(new Blob([n], { type: t.type || "image/png" }));
       }
     }), this.showPreview(), this.checkedImg();
   },
@@ -968,7 +968,7 @@ const $ = (t, e) => {
   key: 0,
   class: "cropper-box"
 }, z = ["src"], B = { class: "cropper-view-box" }, P = ["src"], D = { key: 1 };
-function U(t, e, i, s, r, o) {
+function U(t, e, s, i, r, o) {
   return C(), X("div", {
     class: "vue-cropper",
     ref: "cropper",
@@ -994,7 +994,7 @@ function U(t, e, i, s, r, o) {
       ])
     ])) : y("", !0),
     v("div", {
-      class: S(["cropper-drag-box", { "cropper-move": t.move && !t.crop, "cropper-crop": t.crop, "cropper-modal": t.cropping }]),
+      class: I(["cropper-drag-box", { "cropper-move": t.move && !t.crop, "cropper-crop": t.crop, "cropper-modal": t.cropping }]),
       onMousedown: e[0] || (e[0] = (...h) => t.startMove && t.startMove(...h)),
       onTouchstart: e[1] || (e[1] = (...h) => t.startMove && t.startMove(...h))
     }, null, 34),
@@ -1094,10 +1094,10 @@ function U(t, e, i, s, r, o) {
     ])
   ], 544);
 }
-const W = /* @__PURE__ */ $(N, [["render", U], ["__scopeId", "data-v-f9b786d8"]]), F = function(t) {
+const W = /* @__PURE__ */ $(N, [["render", U], ["__scopeId", "data-v-0052e545"]]), F = function(t) {
   t.component("VueCropper", W);
 }, j = {
-  version: "0.0.14",
+  version: "0.0.16",
   install: F,
   VueCropper: W
 };
