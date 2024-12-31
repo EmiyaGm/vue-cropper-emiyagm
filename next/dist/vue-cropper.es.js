@@ -1,4 +1,4 @@
-import { defineComponent as S, openBlock as m, createElementBlock as v, withDirectives as b, createElementVNode as u, normalizeStyle as w, vShow as O, createCommentVNode as C, normalizeClass as I, toDisplayString as H } from "vue";
+import { defineComponent as S, openBlock as v, createElementBlock as w, withDirectives as b, createElementVNode as u, normalizeStyle as C, vShow as O, createCommentVNode as X, normalizeClass as I, toDisplayString as H } from "vue";
 const W = {};
 W.getData = (t) => new Promise((e, i) => {
   let s = {};
@@ -263,7 +263,7 @@ const N = (t, e) => {
       default: "contain"
     },
     //限制最小区域,可传1以上的数字和字符串，限制长宽都是这么大
-    // 也可以传数组[90,90] 
+    // 也可以传数组[90,90]
     limitMinSize: {
       type: [Number, Array, String],
       default: () => 10,
@@ -709,19 +709,19 @@ const N = (t, e) => {
         if (this.cropW !== 0) {
           let a = e.getContext("2d"), l = 1;
           this.high & !this.full && (l = window.devicePixelRatio), this.enlarge !== 1 & !this.full && (l = Math.abs(Number(this.enlarge)));
-          let f = this.cropW * l, d = this.cropH * l, g = r * this.scale * l, X = o * this.scale * l, x = (this.x - h + this.trueWidth * (1 - this.scale) / 2) * l, y = (this.y - n + this.trueHeight * (1 - this.scale) / 2) * l;
-          c(f, d), a.save(), this.fillColor && (a.fillStyle = this.fillColor, a.fillRect(0, 0, e.width, e.height));
+          let f = this.cropW * l, g = this.cropH * l, d = r * this.scale * l, m = o * this.scale * l, x = (this.x - h + this.trueWidth * (1 - this.scale) / 2) * l, y = (this.y - n + this.trueHeight * (1 - this.scale) / 2) * l;
+          c(f, g), a.save(), this.fillColor && (a.fillStyle = this.fillColor, a.fillRect(0, 0, e.width, e.height));
           const Y = (this.rotate || 0) * 90 * Math.PI / 180;
-          this.full ? (c(f / this.scale, d / this.scale), a.translate(x / this.scale, y / this.scale), a.rotate(Y), a.drawImage(i, 0, 0, g / this.scale, X / this.scale)) : (a.translate(x, y), a.rotate(Y), a.drawImage(i, 0, 0, g, X)), a.restore();
+          this.full ? (c(f / this.scale, g / this.scale), a.translate((d * 0.5 + x) / this.scale, (m * 0.5 + y) / this.scale), a.rotate(Y), a.drawImage(i, -d * 0.5 / this.scale, -m * 0.5 / this.scale, d, m)) : (a.translate(d * 0.5 + x, m * 0.5 + y), a.rotate(Y), a.drawImage(i, -d * 0.5, -m * 0.5, d, m)), a.restore();
         } else {
           let a = r * this.scale, l = o * this.scale, f = e.getContext("2d");
           if (f.save(), this.fillColor && (f.fillStyle = this.fillColor, f.fillRect(0, 0, e.width, e.height)), rotateY) {
-            const d = Math.cos(rotateY * Math.PI / 180), g = a / 2 - a * d / 2;
-            f.transform(d, 0, 0, 1, g, 0);
+            const g = Math.cos(rotateY * Math.PI / 180), d = a / 2 - a * g / 2;
+            f.transform(g, 0, 0, 1, d, 0);
           }
           if (rotateX) {
-            const d = Math.cos(rotateX * Math.PI / 180), g = a / 2 - a * d / 2;
-            f.transform(1, 0, 0, d, 0, g);
+            const g = Math.cos(rotateX * Math.PI / 180), d = a / 2 - a * g / 2;
+            f.transform(1, 0, 0, g, 0, d);
           }
           switch (s) {
             case 0:
@@ -922,16 +922,16 @@ const N = (t, e) => {
   class: "cropper-box"
 }, B = ["src"], P = { class: "cropper-view-box" }, D = ["src"], U = { key: 1 };
 function F(t, e, i, s, r, o) {
-  return m(), v("div", {
+  return v(), w("div", {
     class: "vue-cropper",
     ref: "cropper",
     onMouseover: e[28] || (e[28] = (...h) => t.scaleImg && t.scaleImg(...h)),
     onMouseout: e[29] || (e[29] = (...h) => t.cancelScale && t.cancelScale(...h))
   }, [
-    t.imgs ? (m(), v("div", z, [
+    t.imgs ? (v(), w("div", z, [
       b(u("div", {
         class: "cropper-box-canvas",
-        style: w({
+        style: C({
           width: t.trueWidth + "px",
           height: t.trueHeight + "px",
           transform: "scale(" + t.scale + "," + t.scale + ") translate3d(" + t.x / t.scale + "px," + t.y / t.scale + "px,0)rotateZ(" + t.rotate * 90 + "deg)perspective(1000px)rotateX(" + t.rotateX + "deg)rotateY(" + t.rotateY + "deg)"
@@ -945,15 +945,19 @@ function F(t, e, i, s, r, o) {
       ], 4), [
         [O, !t.loading]
       ])
-    ])) : C("", !0),
+    ])) : X("", !0),
     u("div", {
-      class: I(["cropper-drag-box", { "cropper-move": t.move && !t.crop, "cropper-crop": t.crop, "cropper-modal": t.cropping }]),
+      class: I(["cropper-drag-box", {
+        "cropper-move": t.move && !t.crop,
+        "cropper-crop": t.crop,
+        "cropper-modal": t.cropping
+      }]),
       onMousedown: e[0] || (e[0] = (...h) => t.startMove && t.startMove(...h)),
       onTouchstart: e[1] || (e[1] = (...h) => t.startMove && t.startMove(...h))
     }, null, 34),
     b(u("div", {
       class: "cropper-crop-box",
-      style: w({
+      style: C({
         width: t.cropW + "px",
         height: t.cropH + "px",
         transform: "translate3d(" + t.cropOffsertX + "px," + t.cropOffsertY + "px,0)"
@@ -961,7 +965,7 @@ function F(t, e, i, s, r, o) {
     }, [
       u("span", P, [
         u("img", {
-          style: w({
+          style: C({
             width: t.trueWidth + "px",
             height: t.trueHeight + "px",
             transform: "scale(" + t.scale + "," + t.scale + ") translate3d(" + (t.x - t.cropOffsertX) / t.scale + "px," + (t.y - t.cropOffsertY) / t.scale + "px,0)rotateZ(" + t.rotate * 90 + "deg)perspective(1000px)rotateX(" + t.rotateX + "deg)rotateY(" + t.rotateY + "deg)"
@@ -975,12 +979,12 @@ function F(t, e, i, s, r, o) {
         onMousedown: e[2] || (e[2] = (...h) => t.cropMove && t.cropMove(...h)),
         onTouchstart: e[3] || (e[3] = (...h) => t.cropMove && t.cropMove(...h))
       }, null, 32),
-      t.info ? (m(), v("span", {
+      t.info ? (v(), w("span", {
         key: 0,
         class: "crop-info",
-        style: w({ top: t.cropInfo.top })
-      }, H(t.cropInfo.width) + " × " + H(t.cropInfo.height), 5)) : C("", !0),
-      t.fixedBox ? C("", !0) : (m(), v("span", U, [
+        style: C({ top: t.cropInfo.top })
+      }, H(t.cropInfo.width) + " × " + H(t.cropInfo.height), 5)) : X("", !0),
+      t.fixedBox ? X("", !0) : (v(), w("span", U, [
         u("span", {
           class: "crop-line line-w",
           onMousedown: e[4] || (e[4] = (h) => t.changeCropSize(h, !1, !0, 0, 1)),
@@ -1047,10 +1051,10 @@ function F(t, e, i, s, r, o) {
     ])
   ], 544);
 }
-const M = /* @__PURE__ */ N(A, [["render", F], ["__scopeId", "data-v-cf41ef32"]]), R = function(t) {
+const M = /* @__PURE__ */ N(A, [["render", F], ["__scopeId", "data-v-b61af994"]]), R = function(t) {
   t.component("VueCropper", M);
 }, q = {
-  version: "0.0.17",
+  version: "0.0.18",
   install: R,
   VueCropper: M
 };
