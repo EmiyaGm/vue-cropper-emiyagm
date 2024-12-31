@@ -1532,10 +1532,12 @@ export default defineComponent({
               break;
             default:
               if (!this.full) {
+                ctx.rotate((rotate * 90 * Math.PI) / 180);
                 ctx.drawImage(img, dx, dy, imgW, imgH);
               } else {
                 // 输出原图比例截图
                 setCanvasSize(width / this.scale, height / this.scale);
+                ctx.rotate((rotate * 90 * Math.PI) / 180);
                 ctx.drawImage(
                   img,
                   dx / this.scale,
@@ -1593,6 +1595,7 @@ export default defineComponent({
               break;
             default:
               setCanvasSize(width, height);
+              ctx.rotate((rotate * 90 * Math.PI) / 180);
               ctx.drawImage(img, 0, 0, width, height);
           }
           ctx.restore();
