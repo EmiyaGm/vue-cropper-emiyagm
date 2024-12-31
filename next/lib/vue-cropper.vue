@@ -1,30 +1,22 @@
 <template>
-  <div
-    class="vue-cropper"
-    ref="cropper"
-    @mouseover="scaleImg"
-    @mouseout="cancelScale"
-  >
+  <div class="vue-cropper" ref="cropper" @mouseover="scaleImg" @mouseout="cancelScale">
     <div class="cropper-box" v-if="imgs">
-      <div
-        class="cropper-box-canvas"
-        v-show="!loading"
-        :style="{
-          width: trueWidth + 'px',
-          height: trueHeight + 'px',
-          transform:
-            'scale(' +
-            scale +
-            ',' +
-            scale +
-            ') ' +
-            'translate3d(' +
-            x / scale +
-            'px,' +
-            y / scale +
-            'px,' +
-            '0)' +
-            'rotateZ(' +
+      <div class="cropper-box-canvas" v-show="!loading" :style="{
+        width: trueWidth + 'px',
+        height: trueHeight + 'px',
+        transform:
+          'scale(' +
+          scale +
+          ',' +
+          scale +
+          ') ' +
+          'translate3d(' +
+          x / scale +
+          'px,' +
+          y / scale +
+          'px,' +
+          '0)' +
+          'rotateZ(' +
             rotate * 90 +
             'deg)' +
             'perspective(1000px)' +
@@ -34,48 +26,37 @@
             'rotateY(' +
             rotateY +
             'deg)',
-        }"
-      >
+        }">
         <img :src="imgs" alt="cropper-img" ref="cropperImg" />
       </div>
     </div>
-    <div
-      class="cropper-drag-box"
-      :class="{
-        'cropper-move': move && !crop,
-        'cropper-crop': crop,
+    <div class="cropper-drag-box" :class="{
+      'cropper-move': move && !crop,
+      'cropper-crop': crop,
         'cropper-modal': cropping,
-      }"
-      @mousedown="startMove"
-      @touchstart="startMove"
-    ></div>
-    <div
-      v-show="cropping"
-      class="cropper-crop-box"
-      :style="{
-        width: cropW + 'px',
-        height: cropH + 'px',
-        transform:
-          'translate3d(' + cropOffsertX + 'px,' + cropOffsertY + 'px,' + '0)',
-      }"
-    >
+      }" @mousedown="startMove" @touchstart="startMove"></div>
+    <div v-show="cropping" class="cropper-crop-box" :style="{
+      width: cropW + 'px',
+      height: cropH + 'px',
+      transform:
+        'translate3d(' + cropOffsertX + 'px,' + cropOffsertY + 'px,' + '0)',
+      }">
       <span class="cropper-view-box">
-        <img
-          :style="{
-            width: trueWidth + 'px',
-            height: trueHeight + 'px',
-            transform:
-              'scale(' +
-              scale +
-              ',' +
-              scale +
-              ') ' +
-              'translate3d(' +
-              (x - cropOffsertX) / scale +
-              'px,' +
-              (y - cropOffsertY) / scale +
-              'px,' +
-              '0)' +
+        <img :style="{
+          width: trueWidth + 'px',
+          height: trueHeight + 'px',
+          transform:
+            'scale(' +
+            scale +
+            ',' +
+            scale +
+            ') ' +
+            'translate3d(' +
+            (x - cropOffsertX) / scale +
+            'px,' +
+            (y - cropOffsertY) / scale +
+            'px,' +
+            '0)' +
               'rotateZ(' +
               rotate * 90 +
               'deg)' +
@@ -86,80 +67,36 @@
               'rotateY(' +
               rotateY +
               'deg)',
-          }"
-          :src="imgs"
-          alt="cropper-img"
-        />
+          }" :src="imgs" alt="cropper-img" />
       </span>
-      <span
-        class="cropper-face cropper-move"
-        @mousedown="cropMove"
-        @touchstart="cropMove"
-      ></span>
-      <span class="crop-info" v-if="info" :style="{ top: cropInfo.top }"
-        >{{ cropInfo.width }} × {{ cropInfo.height }}</span
-      >
+      <span class="cropper-face cropper-move" @mousedown="cropMove" @touchstart="cropMove"></span>
+      <span class="crop-info" v-if="info" :style="{ top: cropInfo.top }">{{ cropInfo.width }} × {{ cropInfo.height
+        }}</span>
       <span v-if="!fixedBox">
-        <span
-          class="crop-line line-w"
-          @mousedown="changeCropSize($event, false, true, 0, 1)"
-          @touchstart="changeCropSize($event, false, true, 0, 1)"
-        ></span>
-        <span
-          class="crop-line line-a"
-          @mousedown="changeCropSize($event, true, false, 1, 0)"
-          @touchstart="changeCropSize($event, true, false, 1, 0)"
-        ></span>
-        <span
-          class="crop-line line-s"
-          @mousedown="changeCropSize($event, false, true, 0, 2)"
-          @touchstart="changeCropSize($event, false, true, 0, 2)"
-        ></span>
-        <span
-          class="crop-line line-d"
-          @mousedown="changeCropSize($event, true, false, 2, 0)"
-          @touchstart="changeCropSize($event, true, false, 2, 0)"
-        ></span>
-        <span
-          class="crop-point point1"
-          @mousedown="changeCropSize($event, true, true, 1, 1)"
-          @touchstart="changeCropSize($event, true, true, 1, 1)"
-        ></span>
-        <span
-          class="crop-point point2"
-          @mousedown="changeCropSize($event, false, true, 0, 1)"
-          @touchstart="changeCropSize($event, false, true, 0, 1)"
-        ></span>
-        <span
-          class="crop-point point3"
-          @mousedown="changeCropSize($event, true, true, 2, 1)"
-          @touchstart="changeCropSize($event, true, true, 2, 1)"
-        ></span>
-        <span
-          class="crop-point point4"
-          @mousedown="changeCropSize($event, true, false, 1, 0)"
-          @touchstart="changeCropSize($event, true, false, 1, 0)"
-        ></span>
-        <span
-          class="crop-point point5"
-          @mousedown="changeCropSize($event, true, false, 2, 0)"
-          @touchstart="changeCropSize($event, true, false, 2, 0)"
-        ></span>
-        <span
-          class="crop-point point6"
-          @mousedown="changeCropSize($event, true, true, 1, 2)"
-          @touchstart="changeCropSize($event, true, true, 1, 2)"
-        ></span>
-        <span
-          class="crop-point point7"
-          @mousedown="changeCropSize($event, false, true, 0, 2)"
-          @touchstart="changeCropSize($event, false, true, 0, 2)"
-        ></span>
-        <span
-          class="crop-point point8"
-          @mousedown="changeCropSize($event, true, true, 2, 2)"
-          @touchstart="changeCropSize($event, true, true, 2, 2)"
-        ></span>
+        <span class="crop-line line-w" @mousedown="changeCropSize($event, false, true, 0, 1)"
+          @touchstart="changeCropSize($event, false, true, 0, 1)"></span>
+        <span class="crop-line line-a" @mousedown="changeCropSize($event, true, false, 1, 0)"
+          @touchstart="changeCropSize($event, true, false, 1, 0)"></span>
+        <span class="crop-line line-s" @mousedown="changeCropSize($event, false, true, 0, 2)"
+          @touchstart="changeCropSize($event, false, true, 0, 2)"></span>
+        <span class="crop-line line-d" @mousedown="changeCropSize($event, true, false, 2, 0)"
+          @touchstart="changeCropSize($event, true, false, 2, 0)"></span>
+        <span class="crop-point point1" @mousedown="changeCropSize($event, true, true, 1, 1)"
+          @touchstart="changeCropSize($event, true, true, 1, 1)"></span>
+        <span class="crop-point point2" @mousedown="changeCropSize($event, false, true, 0, 1)"
+          @touchstart="changeCropSize($event, false, true, 0, 1)"></span>
+        <span class="crop-point point3" @mousedown="changeCropSize($event, true, true, 2, 1)"
+          @touchstart="changeCropSize($event, true, true, 2, 1)"></span>
+        <span class="crop-point point4" @mousedown="changeCropSize($event, true, false, 1, 0)"
+          @touchstart="changeCropSize($event, true, false, 1, 0)"></span>
+        <span class="crop-point point5" @mousedown="changeCropSize($event, true, false, 2, 0)"
+          @touchstart="changeCropSize($event, true, false, 2, 0)"></span>
+        <span class="crop-point point6" @mousedown="changeCropSize($event, true, true, 1, 2)"
+          @touchstart="changeCropSize($event, true, true, 1, 2)"></span>
+        <span class="crop-point point7" @mousedown="changeCropSize($event, false, true, 0, 2)"
+          @touchstart="changeCropSize($event, false, true, 0, 2)"></span>
+        <span class="crop-point point8" @mousedown="changeCropSize($event, true, true, 2, 2)"
+          @touchstart="changeCropSize($event, true, true, 2, 2)"></span>
       </span>
     </div>
   </div>
@@ -407,8 +344,8 @@ export default defineComponent({
       return this.isIE
         ? null
         : {
-            passive: false,
-          };
+          passive: false,
+        };
     },
   },
   watch: {
@@ -749,11 +686,11 @@ export default defineComponent({
       };
       var oldL = Math.sqrt(
         Math.pow(oldTouch1.x - oldTouch2.x, 2) +
-          Math.pow(oldTouch1.y - oldTouch2.y, 2)
+        Math.pow(oldTouch1.y - oldTouch2.y, 2)
       );
       var newL = Math.sqrt(
         Math.pow(newTouch1.x - newTouch2.x, 2) +
-          Math.pow(newTouch1.y - newTouch2.y, 2)
+        Math.pow(newTouch1.y - newTouch2.y, 2)
       );
       var cha = newL - oldL;
       // 根据图片本身大小 决定每次改变大小的系数, 图片越大系数越小
@@ -912,8 +849,8 @@ export default defineComponent({
       num < 0
         ? (scale += Math.abs(num))
         : scale > Math.abs(num)
-        ? (scale -= Math.abs(num))
-        : scale;
+          ? (scale -= Math.abs(num))
+          : scale;
       // 延迟0.1s 每次放大大或者缩小的范围
       let status = num < 0 ? "add" : "reduce";
       if (status !== this.coeStatus) {
@@ -946,8 +883,8 @@ export default defineComponent({
       num > 0
         ? (scale += Math.abs(num))
         : scale > Math.abs(num)
-        ? (scale -= Math.abs(num))
-        : scale;
+          ? (scale -= Math.abs(num))
+          : scale;
       if (!this.checkoutImgAxis(this.x, this.y, scale)) {
         return false;
       }
@@ -1106,12 +1043,12 @@ export default defineComponent({
               // 右侧坐标抽 超过左侧
               this.cropW =
                 wrapperW - this.cropChangeX + Math.abs(fw + this.cropOldW) <=
-                wrapperW - minX
+                  wrapperW - minX
                   ? Math.abs(fw + this.cropOldW)
                   : this.cropChangeX - minX;
               this.cropOffsertX =
                 wrapperW - this.cropChangeX + Math.abs(fw + this.cropOldW) <=
-                wrapperW - minX
+                  wrapperW - minX
                   ? this.cropChangeX - Math.abs(fw + this.cropOldW)
                   : minX;
             }
@@ -1152,12 +1089,12 @@ export default defineComponent({
             } else {
               this.cropH =
                 wrapperH - this.cropChangeY + Math.abs(fh + this.cropOldH) <=
-                wrapperH - minY
+                  wrapperH - minY
                   ? Math.abs(fh + this.cropOldH)
                   : this.cropChangeY - minY;
               this.cropOffsertY =
                 wrapperH - this.cropChangeY + Math.abs(fh + this.cropOldH) <=
-                wrapperH - minY
+                  wrapperH - minY
                   ? this.cropChangeY - Math.abs(fh + this.cropOldH)
                   : minY;
             }
@@ -1265,13 +1202,13 @@ export default defineComponent({
       let [minCropW, minCropH] = this.checkCropLimitSize();
       const { width, height } = this.fixed
         ? this.calculateSize(
-            this.fixedNumber[0],
-            this.fixedNumber[1],
-            minCropW,
-            minCropH,
-            this.cropW,
-            this.cropH
-          )
+          this.fixedNumber[0],
+          this.fixedNumber[1],
+          minCropW,
+          minCropH,
+          this.cropW,
+          this.cropH
+        )
         : { width: minCropW, height: minCropH };
       if (width > this.cropW) {
         this.cropW = width;
@@ -1649,25 +1586,19 @@ export default defineComponent({
       obj.img = {
         width: `${this.trueWidth}px`,
         height: `${this.trueHeight}px`,
-        transform: `scale(${scale})translate3d(${transformX}px, ${transformY}px, ${transformZ}px)rotateZ(${
-          this.rotate * 90
-        }deg) perspective(1000px) rotateX(${this.rotateX}deg) rotateY(${
-          this.rotateY
-        }deg)`,
+        transform: `scale(${scale})translate3d(${transformX}px, ${transformY}px, ${transformZ}px)rotateZ(${this.rotate * 90
+          }deg) perspective(1000px) rotateX(${this.rotateX}deg) rotateY(${this.rotateY
+          }deg)`,
       };
       obj.html = `
-      <div class="show-preview" style="width: ${obj.w}px; height: ${
-        obj.h
-      }px,; overflow: hidden">
+      <div class="show-preview" style="width: ${obj.w}px; height: ${obj.h
+        }px,; overflow: hidden">
         <div style="width: ${w}px; height: ${h}px">
-          <img src=${obj.url} style="width: ${this.trueWidth}px; height: ${
-        this.trueHeight
-      }px; transform:
-          scale(${scale})translate3d(${transformX}px, ${transformY}px, ${transformZ}px)rotateZ(${
-        this.rotate * 90
-      }deg) perspective(1000px) rotateX(${this.rotateX}deg) rotateY(${
-        this.rotateY
-      }deg)">
+          <img src=${obj.url} style="width: ${this.trueWidth}px; height: ${this.trueHeight
+        }px; transform:
+          scale(${scale})translate3d(${transformX}px, ${transformY}px, ${transformZ}px)rotateZ(${this.rotate * 90
+        }deg) perspective(1000px) rotateX(${this.rotateX}deg) rotateY(${this.rotateY
+        }deg)">
         </div>
       </div>`;
       this.$emit("real-time", obj);
@@ -1955,8 +1886,8 @@ export default defineComponent({
       "onwheel" in document.createElement("div")
         ? "wheel"
         : document.onmousewheel !== undefined
-        ? "mousewheel"
-        : "DOMMouseScroll";
+          ? "mousewheel"
+          : "DOMMouseScroll";
     let that = this;
     var u = navigator.userAgent;
     this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
