@@ -712,7 +712,16 @@ const N = (t, e) => {
           let f = this.cropW * l, g = this.cropH * l, d = r * this.scale * l, m = o * this.scale * l, x = (this.x - h + this.trueWidth * (1 - this.scale) / 2) * l, y = (this.y - n + this.trueHeight * (1 - this.scale) / 2) * l;
           c(f, g), a.save(), this.fillColor && (a.fillStyle = this.fillColor, a.fillRect(0, 0, e.width, e.height));
           const Y = (this.rotate || 0) * 90 * Math.PI / 180;
-          this.full ? (c(f / this.scale, g / this.scale), a.translate((d * 0.5 + x) / this.scale, (m * 0.5 + y) / this.scale), a.rotate(Y), a.drawImage(i, -d * 0.5 / this.scale, -m * 0.5 / this.scale, d, m)) : (a.translate(d * 0.5 + x, m * 0.5 + y), a.rotate(Y), a.drawImage(i, -d * 0.5, -m * 0.5, d, m)), a.restore();
+          this.full ? (c(f / this.scale, g / this.scale), a.translate(
+            (d * 0.5 + x) / this.scale,
+            (m * 0.5 + y) / this.scale
+          ), a.rotate(Y), a.drawImage(
+            i,
+            -d * 0.5 / this.scale,
+            -m * 0.5 / this.scale,
+            d / this.scale,
+            m / this.scale
+          )) : (a.translate(d * 0.5 + x, m * 0.5 + y), a.rotate(Y), a.drawImage(i, -d * 0.5, -m * 0.5, d, m)), a.restore();
         } else {
           let a = r * this.scale, l = o * this.scale, f = e.getContext("2d");
           if (f.save(), this.fillColor && (f.fillStyle = this.fillColor, f.fillRect(0, 0, e.width, e.height)), rotateY) {
@@ -1051,10 +1060,10 @@ function F(t, e, i, s, r, o) {
     ])
   ], 544);
 }
-const M = /* @__PURE__ */ N(A, [["render", F], ["__scopeId", "data-v-b61af994"]]), R = function(t) {
+const M = /* @__PURE__ */ N(A, [["render", F], ["__scopeId", "data-v-5175aaae"]]), R = function(t) {
   t.component("VueCropper", M);
 }, q = {
-  version: "0.0.18",
+  version: "0.0.19",
   install: R,
   VueCropper: M
 };
