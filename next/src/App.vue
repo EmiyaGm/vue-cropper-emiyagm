@@ -41,6 +41,7 @@
 					<button @click="finish('base64')" class="btn">preview(base64)</button>
 					<button @click="finish('blob')" class="btn">preview(blob)</button>
 					<button @click="() => option.img = ''" class="btn">清除图片</button>
+          <button @click="rotate30" class="btn">Rotate30</button>
           <button @click="rotateY" class="btn">RotateY</button>
           <button @click="rotateX" class="btn">RotateX</button>
 					<a @click="down('base64')" class="btn">download(base64)</a>
@@ -300,6 +301,9 @@ export default {
         // 仅显示 canvas
         // document.body.appendChild(canvas);
       });
+    },
+    rotate30() {
+      this.$refs.cropper.rotate += 30 / 90
     },
     rotateX() {
       this.$refs.cropper.changeRotateX(75)
