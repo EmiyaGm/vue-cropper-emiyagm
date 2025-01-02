@@ -1601,6 +1601,12 @@ export default defineComponent({
         }deg)">
         </div>
       </div>`;
+      obj.scale = scale;
+      obj.rotate = this.rotate;
+      obj.rotateX = this.rotateX;
+      obj.rotateY = this.rotateY;
+      obj.cropOffsertX = this.cropOffsertX;
+      obj.cropOffsertY = this.cropOffsertY;
       this.$emit("real-time", obj);
     },
     // reload 图片布局函数
@@ -1819,6 +1825,17 @@ export default defineComponent({
       this.$nextTick(() => {
         this.checkedImg();
       });
+    },
+
+    setInfo(obj) {
+      this.cropW = obj.w || 0;
+      this.cropH = obj.h || 0;
+      this.scale = obj.scale || 0;
+      this.rotate = obj.rotate || 0;
+      this.rotateX = obj.rotateX || 0;
+      this.rotateY = obj.rotateY || 0;
+      this.cropOffsertX = obj.x1 || 0;
+      this.cropOffsertY = obj.y1 || 0;
     },
 
     changeRotate(number) {
