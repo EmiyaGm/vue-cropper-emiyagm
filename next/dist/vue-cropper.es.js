@@ -880,7 +880,9 @@ const N = (t, e) => {
       });
     },
     setInfo(t) {
-      this.cropW = t.w || 0, this.cropH = t.h || 0, this.scale = t.scale || 0, this.rotate = t.rotate || 0, this.rotateX = t.rotateX || 0, this.rotateY = t.rotateY || 0, this.cropOffsertX = t.x1 || 0, this.cropOffsertY = t.y1 || 0;
+      this.$nextTick(() => {
+        this.cropW = t.w || this.cropW, this.cropH = t.h || this.cropH, this.scale = t.scale || this.scale, this.rotate = t.rotate || this.rotate, this.rotateX = t.rotateX || this.rotateX, this.rotateY = t.rotateY || this.rotateY, this.cropOffsertX = t.x1 || this.cropOffsertX, this.cropOffsertY = t.y1 || this.cropOffsertY;
+      });
     },
     changeRotate(t) {
       this.rotate = t <= -3 || t >= 3 ? 0 : t;
@@ -1063,10 +1065,10 @@ function F(t, e, s, i, r, o) {
     ])
   ], 544);
 }
-const M = /* @__PURE__ */ N(A, [["render", F], ["__scopeId", "data-v-d398e10f"]]), R = function(t) {
+const M = /* @__PURE__ */ N(A, [["render", F], ["__scopeId", "data-v-83933568"]]), R = function(t) {
   t.component("VueCropper", M);
 }, q = {
-  version: "0.0.20",
+  version: "0.0.21",
   install: R,
   VueCropper: M
 };
