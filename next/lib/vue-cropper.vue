@@ -1828,14 +1828,20 @@ export default defineComponent({
     },
 
     setInfo(obj) {
-      this.cropW = obj.w || 0;
-      this.cropH = obj.h || 0;
-      this.scale = obj.scale || 0;
-      this.rotate = obj.rotate || 0;
-      this.rotateX = obj.rotateX || 0;
-      this.rotateY = obj.rotateY || 0;
-      this.cropOffsertX = obj.x1 || 0;
-      this.cropOffsertY = obj.y1 || 0;
+      this.$nextTick(() => {
+        this.cropW = obj.w || this.cropW;
+        this.cropH = obj.h || this.cropH;
+        this.scale = obj.scale || this.scale;
+        this.rotate = obj.rotate || this.rotate;
+        this.rotateX = obj.rotateX || this.rotateX;
+        this.rotateY = obj.rotateY || this.rotateY;
+        this.cropOffsertX = obj.x1 || this.cropOffsertX;
+        this.cropOffsertY = obj.y1 || this.cropOffsertY;
+        // if (this.centerBox) {
+        //   this.moveCrop(null, true);
+        // }
+      })
+
     },
 
     changeRotate(number) {

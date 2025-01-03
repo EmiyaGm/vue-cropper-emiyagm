@@ -1,97 +1,96 @@
 <template>
-	<div class="wrapper">
-		<div class="model" v-show="model">
-			<div class="model-show" @click="model = false">
-				<img :src="modelSrc" alt="" @click="model = false">
-			</div>
-		</div>
-		<div class="content">
-			<h1><a class="title" href="https://github.com/xyxiao001/vue-cropper" target="_blank">vue-cropper</a></h1>
-			<iframe src="https://ghbtns.com/github-btn.html?user=xyxiao001&repo=vue-cropper&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
-			<div class="show-info">
-				<h2>install</h2>
-				<codes>
-					<template #body>{{ code0 }}</template>
-				</codes>
-			</div>
-			<div class="show-info">
-				<h2>example1 基本例子 无限制</h2>
-				<div class="test test1">
-					<vueCropper
-						ref="cropper"
-            v-bind="option"
-						@realTime="realTime"
-						@imgLoad="imgLoad"
-						@imgLoadError="imgLoad"
-						@cropMoving="cropMoving"
-					></vueCropper>
-				</div>
-				<div class="test-button">
-					<button @click="changeImg" class="btn">changeImg</button>
-					<label class="btn" for="uploads">upload</label>
-					<input type="file" id="uploads" style="position:absolute; clip:rect(0 0 0 0);" accept="image/png, image/jpeg, image/gif, image/jpg" @change="uploadImg($event, 1)" ref="uploadImg">
-					<button @click="startCrop" v-if="!crap" class="btn">start</button>
-					<button @click="stopCrop" v-else class="btn">stop</button>
-					<button @click="clearCrop" class="btn">clear</button>
-					<button @click="refreshCrop" class="btn">refresh</button>
-					<button @click="changeScale(1)" class="btn">+</button>
-					<button @click="changeScale(-1)" class="btn">-</button>
-					<button @click="rotateLeft" class="btn">rotateLeft</button>
-					<button @click="rotateRight" class="btn">rotateRight</button>
-					<button @click="finish('base64')" class="btn">preview(base64)</button>
-					<button @click="finish('blob')" class="btn">preview(blob)</button>
-					<button @click="() => option.img = ''" class="btn">清除图片</button>
+  <div class="wrapper">
+    <div class="model" v-show="model">
+      <div class="model-show" @click="model = false">
+        <img :src="modelSrc" alt="" @click="model = false">
+      </div>
+    </div>
+    <div class="content">
+      <h1><a class="title" href="https://github.com/xyxiao001/vue-cropper" target="_blank">vue-cropper</a></h1>
+      <iframe src="https://ghbtns.com/github-btn.html?user=xyxiao001&repo=vue-cropper&type=star&count=true&size=large"
+        frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+      <div class="show-info">
+        <h2>install</h2>
+        <codes>
+          <template #body>{{ code0 }}</template>
+        </codes>
+      </div>
+      <div class="show-info">
+        <h2>example1 基本例子 无限制</h2>
+        <div class="test test1">
+          <vueCropper ref="cropper" v-bind="option" @realTime="realTime" @imgLoad="imgLoad" @imgLoadError="imgLoad"
+            @cropMoving="cropMoving"></vueCropper>
+        </div>
+        <div class="test-button">
+          <button @click="changeImg" class="btn">changeImg</button>
+          <label class="btn" for="uploads">upload</label>
+          <input type="file" id="uploads" style="position:absolute; clip:rect(0 0 0 0);"
+            accept="image/png, image/jpeg, image/gif, image/jpg" @change="uploadImg($event, 1)" ref="uploadImg">
+          <button @click="startCrop" v-if="!crap" class="btn">start</button>
+          <button @click="stopCrop" v-else class="btn">stop</button>
+          <button @click="clearCrop" class="btn">clear</button>
+          <button @click="refreshCrop" class="btn">refresh</button>
+          <button @click="changeScale(1)" class="btn">+</button>
+          <button @click="changeScale(-1)" class="btn">-</button>
+          <button @click="rotateLeft" class="btn">rotateLeft</button>
+          <button @click="rotateRight" class="btn">rotateRight</button>
+          <button @click="finish('base64')" class="btn">preview(base64)</button>
+          <button @click="finish('blob')" class="btn">preview(blob)</button>
+          <button @click="() => option.img = ''" class="btn">清除图片</button>
           <button @click="rotate30" class="btn">Rotate30</button>
           <button @click="rotateY" class="btn">RotateY</button>
           <button @click="rotateX" class="btn">RotateX</button>
-					<a @click="down('base64')" class="btn">download(base64)</a>
-					<a @click="down('blob')" class="btn">download(blob)</a>
+          <button @click="changeInfo" class="btn">ChangeInfo</button>
+          <a @click="down('base64')" class="btn">download(base64)</a>
+          <a @click="down('blob')" class="btn">download(blob)</a>
           <a @click="canvasDownload" class="btn">download</a>
-					<a :href="downImg" download="demo.png" ref="downloadDom"></a>
-				</div>
+          <a :href="downImg" download="demo.png" ref="downloadDom"></a>
+        </div>
 
-				<div class="pre">
-					<!-- <section class="pre-item">
+        <div class="pre">
+          <!-- <section class="pre-item">
 						<p>固定大小 固定宽度100px</p>
 						<section v-html="previews.html"></section>
 					</section> -->
 
-					<section class="pre-item">
-						<p>截图框大小</p>
-						<div class="show-preview" :style="{'width': previews.w + 'px', 'height': previews.h + 'px',  'overflow': 'hidden',
-							'margin': '5px'}">
-							<div :style="previews.div" ref="html2canvasDiv">
-								<img :src="previews.url" :style="previews.img">
-							</div>
-						</div>
-					</section>
+          <section class="pre-item">
+            <p>截图框大小</p>
+            <div class="show-preview" :style="{
+              'width': previews.w + 'px', 'height': previews.h + 'px', 'overflow': 'hidden',
+              'margin': '5px'
+            }">
+              <div :style="previews.div" ref="html2canvasDiv">
+                <img :src="previews.url" :style="previews.img">
+              </div>
+            </div>
+          </section>
 
-					<section class="pre-item">
-						<p>中等大小</p>
-						<div :style="previewStyle1"> 
-							<div :style="previews.div">
-								<img :src="previews.url" :style="previews.img">
-							</div>
-						</div>
-					</section>
-
-					<section class="pre-item">
-            <p>迷你大小</p>
-            <div :style="previewStyle2"> 
+          <section class="pre-item">
+            <p>中等大小</p>
+            <div :style="previewStyle1">
               <div :style="previews.div">
                 <img :src="previews.url" :style="previews.img">
               </div>
             </div>
-					</section>
+          </section>
+
+          <section class="pre-item">
+            <p>迷你大小</p>
+            <div :style="previewStyle2">
+              <div :style="previews.div">
+                <img :src="previews.url" :style="previews.img">
+              </div>
+            </div>
+          </section>
 
           <section class="pre-item" title="zoom: (100 / previews.w)">
             <p>固定为100宽度</p>
-            <div :style="previewStyle3"> 
+            <div :style="previewStyle3">
               <div :style="previews.div">
                 <img :src="previews.url" :style="previews.img">
               </div>
             </div>
-					</section>
+          </section>
 
 
           <section class="pre-item" title="zoom: (100 / previews.h)">
@@ -101,114 +100,114 @@
                 <img :src="previews.url" :style="previews.img">
               </div>
             </div>
-					</section>
-				</div>
+          </section>
+        </div>
 
 
-				<div style="display:block; width: 100%;">
+        <div style="display:block; width: 100%;">
           <label class="c-item">
             <span>超出裁剪框的颜色</span>
             <input type="color" v-model="option.fillColor" />
             <button @click="option.fillColor = 'transparent'" class="btn">清空颜色</button>
           </label>
-					<label class="c-item">
-						<span>图片默认渲染方式</span>
-						<select v-model="option.mode">
-							<option value="contain">contain</option>
-							<option value="cover">cover</option>
-							<option value="400px auto">400px auto</option>
-							<option value="auto 400px">auto 400px</option>
-							<option value="50%">50%</option>
-							<option value="auto 50%">auto 50%</option>							
-						</select>
-						<section>
-							类似css background属性设置  设置不符合规范不生效， 参照文档说明
-						</section>
-					</label>
+          <label class="c-item">
+            <span>图片默认渲染方式</span>
+            <select v-model="option.mode">
+              <option value="contain">contain</option>
+              <option value="cover">cover</option>
+              <option value="400px auto">400px auto</option>
+              <option value="auto 400px">auto 400px</option>
+              <option value="50%">50%</option>
+              <option value="auto 50%">auto 50%</option>
+            </select>
+            <section>
+              类似css background属性设置 设置不符合规范不生效， 参照文档说明
+            </section>
+          </label>
           <label class="c-item">
             <span>上传时图片最大大小(默认会压缩尺寸到这个大小)</span>
             <input type="nubmer" v-model="option.maxImgSize">
           </label>
-					<label class="c-item">
-						<span>上传图片是否显示原始宽高 (针对大图 可以铺满)</span>
-						<input type="checkbox" v-model="option.original">
-						<span>original: {{ option.original}}</span>
-					</label>
-					<label class="c-item">
-						<span>是否根据dpr生成适合屏幕的高清图片</span>
-						<input type="checkbox" v-model="option.high">
-						<span>high: {{ option.high}}</span>
-					</label>
-					<label class="c-item">
-						<span>是否输出原图比例的截图</span>
-						<input type="checkbox" v-model="option.full">
-						<span>full: {{ option.full}}</span>
-					</label>
-					<label class="c-item">
-						<span>截图信息展示是否是真实的输出宽高</span>
-						<input type="checkbox" v-model="option.infoTrue">
-						<span>infoTrue: {{ option.infoTrue}}</span>							
-					</label>
-					<label class="c-item">
-						<span>能否拖动图片</span>
-						<input type="checkbox" v-model="option.canMove">
-						<span>canMove: {{ option.canMove}}</span>
-					</label>
-					<label class="c-item">
-						<span>能否拖动截图框</span>
-						<input type="checkbox" v-model="option.canMoveBox">
-						<span>canMoveBox: {{ option.canMoveBox}}</span>
-					</label>
-					<label class="c-item">
-						<span>截图框固定大小</span>
-						<input type="checkbox" v-model="option.fixedBox">
-						<span>fixedBox: {{ option.fixedBox}}</span>
-					</label>
-					<label class="c-item">
-						<span>是否自动生成截图框</span>
-						<input type="checkbox" v-model="option.autoCrop">
-						<span>autoCrop: {{ option.autoCrop}}</span>
-					</label>
           <label class="c-item">
-						<span>是否开启截图框比例</span>
-						<input type="checkbox" v-model="option.fixed">
-						<span>fixed: {{ option.fixed}}</span>
-					</label>
+            <span>上传图片是否显示原始宽高 (针对大图 可以铺满)</span>
+            <input type="checkbox" v-model="option.original">
+            <span>original: {{ option.original }}</span>
+          </label>
           <label class="c-item">
-						<span>固定截图框比例</span>
-						<span>宽度: </span><input type="number" v-model="option.fixedNumber[0]">
-						<span>高度: </span><input type="number" v-model="option.fixedNumber[1]">
-					</label>
+            <span>是否根据dpr生成适合屏幕的高清图片</span>
+            <input type="checkbox" v-model="option.high">
+            <span>high: {{ option.high }}</span>
+          </label>
           <label class="c-item">
-						<span>截图框的最小限制</span>
-						<span>宽度:  </span><input type="number" v-model="option.limitMinSize[0]">
-						<span>高度:  </span><input type="number" v-model="option.limitMinSize[1]">
-					</label>
-					<label class="c-item">
-						<span>自动生成截图框的宽高</span>
-						<span>宽度:  </span><input type="number" v-model="option.autoCropWidth">
-						<span>高度:  </span><input type="number" v-model="option.autoCropHeight">
-					</label>
-					<label class="c-item">
-						<span>截图框是否限制在图片里(只有在自动生成截图框时才能生效)</span>
-						<input type="checkbox" v-model="option.centerBox">
-						<span>centerBox: {{ option.centerBox}}</span>
-					</label>
-					<label class="c-item">
-						<span>是否按照截图框比例输出 默认为1 </span>
-						<input type="number" v-model="option.enlarge">
-					</label>
-					<p>输出图片格式</p>
-					<label class="c-item">
-						<label>jpg  <input type="radio" name="type" value="jpeg" v-model="option.outputType"></label>
-						<label>png  <input type="radio" name="type" value="png" v-model="option.outputType"></label>
-						<label>webp <input type="radio" name="type" value="webp" v-model="option.outputType"></label>
-					</label>
-				</div>
-				
-			</div>
-		</div>
-	</div>
+            <span>是否输出原图比例的截图</span>
+            <input type="checkbox" v-model="option.full">
+            <span>full: {{ option.full }}</span>
+          </label>
+          <label class="c-item">
+            <span>截图信息展示是否是真实的输出宽高</span>
+            <input type="checkbox" v-model="option.infoTrue">
+            <span>infoTrue: {{ option.infoTrue }}</span>
+          </label>
+          <label class="c-item">
+            <span>能否拖动图片</span>
+            <input type="checkbox" v-model="option.canMove">
+            <span>canMove: {{ option.canMove }}</span>
+          </label>
+          <label class="c-item">
+            <span>能否拖动截图框</span>
+            <input type="checkbox" v-model="option.canMoveBox">
+            <span>canMoveBox: {{ option.canMoveBox }}</span>
+          </label>
+          <label class="c-item">
+            <span>截图框固定大小</span>
+            <input type="checkbox" v-model="option.fixedBox">
+            <span>fixedBox: {{ option.fixedBox }}</span>
+          </label>
+          <label class="c-item">
+            <span>是否自动生成截图框</span>
+            <input type="checkbox" v-model="option.autoCrop">
+            <span>autoCrop: {{ option.autoCrop }}</span>
+          </label>
+          <label class="c-item">
+            <span>是否开启截图框比例</span>
+            <input type="checkbox" v-model="option.fixed">
+            <span>fixed: {{ option.fixed }}</span>
+          </label>
+          <label class="c-item">
+            <span>固定截图框比例</span>
+            <span>宽度: </span><input type="number" v-model="option.fixedNumber[0]">
+            <span>高度: </span><input type="number" v-model="option.fixedNumber[1]">
+          </label>
+          <label class="c-item">
+            <span>截图框的最小限制</span>
+            <span>宽度: </span><input type="number" v-model="option.limitMinSize[0]">
+            <span>高度: </span><input type="number" v-model="option.limitMinSize[1]">
+          </label>
+          <label class="c-item">
+            <span>自动生成截图框的宽高</span>
+            <span>宽度: </span><input type="number" v-model="option.autoCropWidth">
+            <span>高度: </span><input type="number" v-model="option.autoCropHeight">
+          </label>
+          <label class="c-item">
+            <span>截图框是否限制在图片里(只有在自动生成截图框时才能生效)</span>
+            <input type="checkbox" v-model="option.centerBox">
+            <span>centerBox: {{ option.centerBox }}</span>
+          </label>
+          <label class="c-item">
+            <span>是否按照截图框比例输出 默认为1 </span>
+            <input type="number" v-model="option.enlarge">
+          </label>
+          <p>输出图片格式</p>
+          <label class="c-item">
+            <label>jpg <input type="radio" name="type" value="jpeg" v-model="option.outputType"></label>
+            <label>png <input type="radio" name="type" value="png" v-model="option.outputType"></label>
+            <label>webp <input type="radio" name="type" value="webp" v-model="option.outputType"></label>
+          </label>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -226,7 +225,7 @@ export default {
     VueCropper,
     codes,
   },
-  data: function() {
+  data: function () {
     return {
       model: false,
       modelSrc: "",
@@ -239,20 +238,20 @@ export default {
         // 	img: 'https://fengyuanchen.github.io/cropper/images/picture.jpg'
         // },
         {
-          img: "https://avatars2.githubusercontent.com/u/15681693?s=460&v=4"
+          img: "https://ss.yiyiny.com/dg-assets/2025/01/02/00rlo2re5m3z56s2.jpg"
         },
-        {
-          img: "https://p3-pc.douyinpic.com/aweme/1080x1080/aweme-avatar/tos-cn-avt-0015_2f07496a52314c3e024eaafaba73dd35.jpeg"
-        },
-        {
-          img: "https://p3-pc.douyinpic.com/aweme/1080x1080/aweme-avatar/mosaic-legacy_2e7480001384708367aa1.jpeg"
-        },
-        {
-          img: "https://p3-pc.douyinpic.com/aweme/1080x1080/aweme-avatar/tos-cn-i-0813_80f34c63344d44c292dacf4608c7b258.jpeg"
-        },
-        {
-          img: "https://p3-pc.douyinpic.com/aweme/1080x1080/aweme-avatar/tos-cn-avt-0015_48b61ee1b6b34fe945246cd1ccc4243d.jpeg"
-        },
+        // {
+        //   img: "https://p3-pc.douyinpic.com/aweme/1080x1080/aweme-avatar/tos-cn-avt-0015_2f07496a52314c3e024eaafaba73dd35.jpeg"
+        // },
+        // {
+        //   img: "https://p3-pc.douyinpic.com/aweme/1080x1080/aweme-avatar/mosaic-legacy_2e7480001384708367aa1.jpeg"
+        // },
+        // {
+        //   img: "https://p3-pc.douyinpic.com/aweme/1080x1080/aweme-avatar/tos-cn-i-0813_80f34c63344d44c292dacf4608c7b258.jpeg"
+        // },
+        // {
+        //   img: "https://p3-pc.douyinpic.com/aweme/1080x1080/aweme-avatar/tos-cn-avt-0015_48b61ee1b6b34fe945246cd1ccc4243d.jpeg"
+        // },
       ],
       option: {
         img: "",
@@ -270,7 +269,7 @@ export default {
         centerBox: true,
         high: false,
         cropData: {},
-				enlarge: 1,
+        enlarge: 1,
         mode: 'contain',
         maxImgSize: 3000,
         limitMinSize: [50, 50],
@@ -283,7 +282,7 @@ export default {
       previewStyle2: {},
       previewStyle3: {},
       previewStyle4: {},
-			code0: '',
+      code0: '',
     };
   },
   methods: {
@@ -297,7 +296,7 @@ export default {
         downloadLink.href = img;
         downloadLink.download = 'screenshot.png';
         downloadLink.click();
- 
+
         // 仅显示 canvas
         // document.body.appendChild(canvas);
       });
@@ -394,10 +393,10 @@ export default {
         height: previews.h + "px",
         overflow: "hidden",
         margin: "0",
-        zoom: (100 / previews.h)        
+        zoom: (100 / previews.h)
       };
 
-			this.previews = data;
+      this.previews = data;
     },
 
     finish2(type) {
@@ -477,11 +476,32 @@ export default {
 
     cropMoving(data) {
       this.option.cropData = data;
+    },
+    changeInfo() {
+      this.$nextTick(() => {
+        // auto crop
+        // this.$refs.cropper.goAutoCrop()
+        this.$nextTick(() => {
+          // if cropped and has position message, update crop box
+          this.$refs.cropper.setInfo({
+            x1: 0,
+            y1: 0,
+            w: 100,
+            h: 100
+          })
+        })
+      })
+      // this.$refs.cropper.setInfo({
+      //   x1: 0,
+      //   y1: 0,
+      //   w: 100,
+      //   h: 100
+      // })
     }
   },
   mounted() {
     this.changeImg();
-		this.code0 = `
+    this.code0 = `
 			npm install vue-cropper
 			// 组件内使用
 			import { VueCropper }  from 'vue-cropper' 
@@ -588,20 +608,18 @@ code.language-html {
   text-align: center;
   line-height: 1.5;
   margin: 20px 0px;
-  background-image: -webkit-linear-gradient(
-    left,
-    #3498db,
-    #f47920 10%,
-    #d71345 20%,
-    #f7acbc 30%,
-    #ffd400 40%,
-    #3498db 50%,
-    #f47920 60%,
-    #d71345 70%,
-    #f7acbc 80%,
-    #ffd400 90%,
-    #3498db
-  );
+  background-image: -webkit-linear-gradient(left,
+      #3498db,
+      #f47920 10%,
+      #d71345 20%,
+      #f7acbc 30%,
+      #ffd400 40%,
+      #3498db 50%,
+      #f47920 60%,
+      #d71345 70%,
+      #f7acbc 80%,
+      #ffd400 90%,
+      #3498db);
   color: transparent;
   -webkit-background-clip: text;
   background-size: 200% 100%;
@@ -641,14 +659,12 @@ code.language-html {
   user-select: none;
   background-position: 0px 0px, 10px 10px;
   background-size: 20px 20px;
-  background-image: linear-gradient(
-      45deg,
+  background-image: linear-gradient(45deg,
       #eee 25%,
       transparent 25%,
       transparent 75%,
       #eee 75%,
-      #eee 100%
-    ),
+      #eee 100%),
     linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
 }
 
@@ -659,18 +675,19 @@ code.language-html {
 }
 
 .pre {
-	display: flex;
+  display: flex;
   flex-wrap: wrap;
 }
 
 .pre-item {
-	padding-right: 20px;
+  padding-right: 20px;
 }
 
 @keyframes slide {
   0% {
     background-position: 0 0;
   }
+
   100% {
     background-position: -100% 0;
   }
